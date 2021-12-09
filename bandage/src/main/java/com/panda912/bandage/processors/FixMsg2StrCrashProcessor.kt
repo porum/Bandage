@@ -3,8 +3,7 @@ package com.panda912.bandage.processors
 import android.os.Build
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
-import com.panda912.bandage.Bandage.TAG
+import com.panda912.bandage.Bandage.log
 import com.panda912.bandage.Processor
 
 /**
@@ -21,7 +20,7 @@ class FixMsg2StrCrashProcessor : Processor {
     if (isOppo && message.target == null) {
       message.target = handler
       val reason = "message[" + message.what + "].target is null"
-      Log.e(TAG, "fixMessageToStringCrash :$reason")
+      log(message = "fixMessageToStringCrash :$reason")
     }
 
     return chain.proceed(message)

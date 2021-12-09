@@ -4,8 +4,8 @@ import android.app.Activity;
 import android.app.Application;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.lang.ref.SoftReference;
 import java.util.List;
@@ -51,37 +51,37 @@ public class ActivityManager implements Application.ActivityLifecycleCallbacks {
   }
 
   @Override
-  public void onActivityCreated(@NonNull Activity activity, @Nullable Bundle savedInstanceState) {
+  public void onActivityCreated(@NotNull Activity activity, @Nullable Bundle savedInstanceState) {
     mActivityList.add(new SoftReference<>(activity));
   }
 
   @Override
-  public void onActivityStarted(@NonNull Activity activity) {
+  public void onActivityStarted(@NotNull Activity activity) {
 
   }
 
   @Override
-  public void onActivityResumed(@NonNull Activity activity) {
+  public void onActivityResumed(@NotNull Activity activity) {
 
   }
 
   @Override
-  public void onActivityPaused(@NonNull Activity activity) {
+  public void onActivityPaused(@NotNull Activity activity) {
 
   }
 
   @Override
-  public void onActivityStopped(@NonNull Activity activity) {
+  public void onActivityStopped(@NotNull Activity activity) {
 
   }
 
   @Override
-  public void onActivitySaveInstanceState(@NonNull Activity activity, @NonNull Bundle bundle) {
+  public void onActivitySaveInstanceState(@NotNull Activity activity, @NotNull Bundle bundle) {
 
   }
 
   @Override
-  public void onActivityDestroyed(@NonNull Activity activity) {
+  public void onActivityDestroyed(@NotNull Activity activity) {
     for (SoftReference<Activity> softReference : mActivityList) {
       if (softReference.get() == activity) {
         mActivityList.remove(softReference);

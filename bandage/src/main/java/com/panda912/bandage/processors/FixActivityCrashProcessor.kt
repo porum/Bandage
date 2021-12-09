@@ -2,10 +2,9 @@ package com.panda912.bandage.processors
 
 import android.app.Activity
 import android.os.Handler
-import android.util.Log
 import android.util.SparseArray
 import com.panda912.bandage.ActivityThreadFixMessage
-import com.panda912.bandage.Bandage.TAG
+import com.panda912.bandage.Bandage.log
 import com.panda912.bandage.Processor
 import com.panda912.bandage.utils.ActivityManager
 
@@ -48,7 +47,7 @@ class FixActivityCrashProcessor(
       msgName == "STOP_ACTIVITY_HIDE" ||
       msgName == "EXECUTE_TRANSACTION"
     ) {
-      Log.w(TAG, "finish fatal activity.", th)
+      log(message = "finish fatal activity.", throwable = th)
       val activity: Activity? = ActivityManager.getInstance().curActivity
       if (!ActivityManager.getInstance().isDestroyed(activity)) {
         activity?.finish()

@@ -3,7 +3,8 @@ package com.panda912.bandage.sp;
 import android.annotation.SuppressLint;
 import android.os.Build;
 import android.os.Message;
-import android.util.Log;
+
+import com.panda912.bandage.Bandage;
 
 import java.lang.reflect.Field;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -38,9 +39,9 @@ public class SpAnrHelper {
       getPendingWorkFinishers();
       hasGetPendingWorkFinishers = true;
     }
-    Log.i(TAG, "fix sp anr " + tag);
+    Bandage.log(TAG, "fix sp anr " + tag, null);
     if (sPendingWorkFinishers != null) {
-      Log.i(TAG, "clear PendingWorkFinishers ");
+      Bandage.log(TAG, "clear PendingWorkFinishers", null);
       sPendingWorkFinishers.clear();
     }
   }
@@ -53,7 +54,7 @@ public class SpAnrHelper {
         sPendingWorkFinishers = (ConcurrentLinkedQueue<Runnable>) field.get(null);
       }
     } catch (Throwable th) {
-      Log.w(TAG, "hook fail.", th);
+      Bandage.log(TAG, "hook fail.", th);
     }
   }
 

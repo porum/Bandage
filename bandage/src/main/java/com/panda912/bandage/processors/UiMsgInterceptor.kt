@@ -2,9 +2,8 @@ package com.panda912.bandage.processors
 
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import com.android.internal.os.SomeArgs
-import com.panda912.bandage.Bandage.TAG
+import com.panda912.bandage.Bandage.log
 import com.panda912.bandage.Processor
 
 /**
@@ -22,16 +21,16 @@ class UiMsgInterceptor : Processor {
     if (message.obj is SomeArgs) {
       val someArgs = message.obj as SomeArgs
       if (someArgs.arg2 is Bundle && (someArgs.arg2 as Bundle).containsKey("IGrabNodeReceiver")) {
-        Log.i(TAG, "huawei is grabing node.");
+        log(message = "huawei is grabing node.")
         return true
       }
       return chain.proceed(message)
     } else if (message.obj.javaClass.name != "android.app.ActivityThread\$RequestContentNode") {
       return chain.proceed(message)
     } else {
-      message.obj = null;
-      message.what = -1;
-      Log.i(TAG, "huawei is grabing node.");
+      message.obj = null
+      message.what = -1
+      log(message = "huawei is grabing node.")
       return true
     }
 

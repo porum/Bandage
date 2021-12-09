@@ -8,23 +8,41 @@ import android.os.Handler
 import android.os.Message
 import android.util.Log
 import android.util.SparseArray
-import androidx.core.util.isNotEmpty
 import com.panda912.bandage.processors.*
 
 /**
  * Created by panda on 2021/12/6 16:35
  */
+
+interface ILogger {
+  fun log(tag: String, message: String, throwable: Throwable?)
+
+  companion object DEFAULT : ILogger {
+    override fun log(tag: String, message: String, throwable: Throwable?) {
+      Log.i(tag, message, throwable)
+    }
+  }
+}
+
 @SuppressLint("PrivateApi", "DiscouragedPrivateApi", "SoonBlockedPrivateApi")
 object Bandage {
-  internal const val TAG = "Bandage"
+  private const val TAG = "Bandage"
 
   private const val TINKER_CALLBACK =
     "com.tencent.tinker.loader.TinkerResourceLoader\$ResourceStateMonitor\$HackerCallback"
 
+  private lateinit var logger: ILogger
+
   private var mH: Handler? = null
   private var msgs = SparseArray<ActivityThreadFixMessage>()
 
-  fun hook() {
+  @JvmStatic
+  fun log(tag: String = TAG, message: String, throwable: Throwable? = null) {
+    logger.log(tag, message, throwable)
+  }
+
+  fun hook(logger: ILogger = ILogger.DEFAULT) {
+    this.logger = logger
     if (hookActivityThreadHandler()) {
       prepareMessages()
     }
@@ -48,15 +66,15 @@ object Bandage {
         get(handler) as? Handler.Callback
       }
       if (handler == null) {
-        Log.e(TAG, "hook ActivityThread\$mH fail, mH is null")
+        log(message = "hook ActivityThread\$mH fail, mH is null")
         return false
       } else if (callback == null || TINKER_CALLBACK == callback.javaClass.name) {
         mH = handler
         mCallbackField.set(handler, CallbackDelegate(callback))
-        Log.i(TAG, "hook ActivityThread\$mH success")
+        log(message = "hook ActivityThread\$mH success")
         return true
       } else {
-        Log.e(TAG, "hook ActivityThread\$mH failed, callback: " + callback.javaClass.name)
+        log(message = "hook ActivityThread\$mH failed, callback: " + callback.javaClass.name)
         return false
       }
     } catch (th: Throwable) {
@@ -89,7 +107,7 @@ object Bandage {
       msgs.put(143, ActivityThreadFixMessage(143, "REQUEST_ASSIST_CONTEXT_EXTRAS"))
     }
 
-    if (msgs.isNotEmpty()) {
+    if (msgs.size() != 0) {
       checkMessages()
     }
   }
@@ -106,7 +124,7 @@ object Bandage {
         message.msgId = code
         sparseArray.put(code, message)
       } catch (th: Throwable) {
-        Log.w(TAG, "check $message fail", th)
+        log(message = "check $message fail", throwable = th)
       }
     }
     msgs = sparseArray

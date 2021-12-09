@@ -1,8 +1,7 @@
 package com.panda912.bandage.processors
 
 import android.os.Handler
-import android.util.Log
-import com.panda912.bandage.Bandage.TAG
+import com.panda912.bandage.Bandage.log
 import com.panda912.bandage.Processor
 
 /**
@@ -18,7 +17,7 @@ class OriginCallbackProcessor(private val callback: Handler.Callback?) : Process
           return true
         }
       } catch (th: Throwable) {
-        Log.w(TAG, "origin callback handle message error", th)
+        log(message = "origin callback handle message error", throwable = th)
       }
     }
 
