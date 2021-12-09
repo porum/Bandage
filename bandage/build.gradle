@@ -1,6 +1,35 @@
 plugins {
     id 'com.android.library'
     id 'kotlin-android'
+    id "maven-publish"
+    id "signing"
+    id "org.jetbrains.dokka"
+}
+
+// https://kotlin.github.io/dokka/1.6.0/user_guide/gradle/usage/#configuration-options
+dokkaJavadoc.configure {
+    // outputDirectory.set(buildDir.resolve("dokka"))
+    outputDirectory.set(new File(buildDir.toString() + File.separatorChar + "dokka"))
+    // Set module name displayed in the final output
+    moduleName = "Bandage"
+    offlineMode.set(true)
+    dokkaSourceSets {
+        configureEach {
+            // Do not create index pages for empty packages
+            skipEmptyPackages.set(true)
+            // Disable linking to online kotlin-stdlib documentation
+            noStdlibLink.set(false)
+            // Disable linking to online Android documentation (only applicable for Android projects)
+            noAndroidSdkLink.set(false)
+
+            // Suppress a package
+            perPackageOption {
+                // will match all android or .android packages and sub-packages
+                matchingRegex.set(".*\\.?android.*")
+                suppress.set(true)
+            }
+        }
+    }
 }
 
 android {
@@ -12,7 +41,6 @@ android {
         versionCode 1
         versionName "1.0"
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
     }
 
@@ -31,12 +59,84 @@ android {
     }
 }
 
-dependencies {
+afterEvaluate {
+    task sourceJar(type: Jar) {
+        archiveClassifier.set("sources")
+        from android.sourceSets.main.java.srcDirs
+    }
 
-    implementation 'androidx.core:core-ktx:1.3.2'
-    implementation 'androidx.appcompat:appcompat:1.2.0'
-    implementation 'com.google.android.material:material:1.3.0'
-    testImplementation 'junit:junit:4.+'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    task dokkaJavadocJar(type: Jar, dependsOn: dokkaJavadoc) {
+        archiveClassifier.set("javadoc")
+        from(dokkaJavadoc.outputDirectory)
+    }
+
+    // https://docs.gradle.org/current/userguide/publishing_maven.html
+    publishing {
+        publications {
+            // Creates a Maven publication called "release".
+            release(MavenPublication) {
+                // The default Maven POM identifying attributes are mapped as follows:
+                // groupId - project.group
+                // artifactId - project.name
+                // version - project.version
+
+                groupId = "io.github.porum"
+                artifactId = "bandage"
+                version = "1.0.0-SNAPSHOT"
+
+                // Applies the component for the release build variant.
+                artifact sourceJar
+                artifact dokkaJavadocJar
+                android.libraryVariants.configureEach { variant ->
+                    if (variant.name == "release") {
+                        artifact(packageLibraryProvider.flatMap { it.archiveFile }) {
+                            extension "aar"
+                            builtBy(packageLibraryProvider)
+                        }
+                    }
+                }
+
+
+                pom {
+                    name = 'Bandage'
+                    description = 'Pdd Bandage'
+                    url = 'https://github.com/porum/PDD_Bandage'
+                    licenses {
+                        license {
+                            name = 'The Apache License, Version 2.0'
+                            url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                        }
+                    }
+                    developers {
+                        developer {
+                            id = 'porum'
+                            name = 'sunguo.sun'
+                            email = 'sunguobao12@gmail.com'
+                        }
+                    }
+                    scm {
+                        url = "https://github.com/porum/PDD_Bandage.git"
+                    }
+                }
+            }
+        }
+
+        repositories {
+            maven {
+                if (VERSION.endsWith("-SNAPSHOT")) {
+                    url = "https://s01.oss.sonatype.org/content/repositories/snapshots/"
+                } else {
+                    url = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
+                }
+                credentials {
+                    username sonatypeUserName
+                    password sonatypePassword
+                }
+            }
+        }
+    }
+
+    signing {
+        sign publishing.publications.release
+    }
 }
