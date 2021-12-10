@@ -1,13 +1,16 @@
 package com.panda912.bandage.processors
 
 import android.os.Handler
-import com.panda912.bandage.Bandage.log
+import com.panda912.bandage.BandageLogger
 import com.panda912.bandage.Processor
 
 /**
  * Created by panda on 2021/12/6 17:05
  */
 class OriginCallbackProcessor(private val callback: Handler.Callback?) : Processor {
+  companion object {
+    private const val TAG = "OriginCallbackProcessor"
+  }
 
   override fun process(chain: Processor.Chain): Boolean {
     val message = chain.input()
@@ -17,7 +20,7 @@ class OriginCallbackProcessor(private val callback: Handler.Callback?) : Process
           return true
         }
       } catch (th: Throwable) {
-        log(message = "origin callback handle message error", throwable = th)
+        BandageLogger.w(TAG, "origin callback handle message error", th)
       }
     }
 

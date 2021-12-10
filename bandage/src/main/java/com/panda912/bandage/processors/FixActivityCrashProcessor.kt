@@ -4,7 +4,7 @@ import android.app.Activity
 import android.os.Handler
 import android.util.SparseArray
 import com.panda912.bandage.ActivityThreadFixMessage
-import com.panda912.bandage.Bandage.log
+import com.panda912.bandage.BandageLogger
 import com.panda912.bandage.Processor
 import com.panda912.bandage.utils.ActivityManager
 
@@ -14,8 +14,11 @@ import com.panda912.bandage.utils.ActivityManager
  */
 class FixActivityCrashProcessor(
   private val mH: Handler?,
-  private val msgs: SparseArray<ActivityThreadFixMessage>
+  private val msgs: SparseArray<ActivityThreadFixMessage>?
 ) : Processor {
+  companion object {
+    private const val TAG = "FixActivityCrashProcessor"
+  }
 
   override fun process(chain: Processor.Chain): Boolean {
     if (mH == null) {
@@ -23,7 +26,7 @@ class FixActivityCrashProcessor(
     }
 
     val message = chain.input()
-    val fixMessage = msgs.get(message.what) ?: return false
+    val fixMessage = msgs?.get(message.what) ?: return false
 
     try {
       mH.handleMessage(message)
@@ -47,7 +50,7 @@ class FixActivityCrashProcessor(
       msgName == "STOP_ACTIVITY_HIDE" ||
       msgName == "EXECUTE_TRANSACTION"
     ) {
-      log(message = "finish fatal activity.", throwable = th)
+      BandageLogger.w(TAG, "finish fatal activity.", th)
       val activity: Activity? = ActivityManager.getInstance().curActivity
       if (!ActivityManager.getInstance().isDestroyed(activity)) {
         activity?.finish()

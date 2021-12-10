@@ -2,6 +2,7 @@ package com.panda912.bandage.sample
 
 import android.app.Application
 import com.panda912.bandage.Bandage
+import com.panda912.bandage.BandageLogger
 import com.panda912.bandage.utils.ActivityManager
 
 /**
@@ -13,6 +14,6 @@ class SampleApplication : Application() {
     super.onCreate()
     HiddenApiUtil.exemptAll()
     registerActivityLifecycleCallbacks(ActivityManager.getInstance())
-    Bandage.hook()
+    Bandage.install(BandageLogger.ILogger.DEFAULT)
   }
 }

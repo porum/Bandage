@@ -59,6 +59,10 @@ android {
     }
 }
 
+dependencies {
+    compileOnly project(":lib_hook_android")
+}
+
 afterEvaluate {
     task sourceJar(type: Jar) {
         archiveClassifier.set("sources")
