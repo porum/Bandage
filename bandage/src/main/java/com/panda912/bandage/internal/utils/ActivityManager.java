@@ -1,4 +1,4 @@
-package com.panda912.bandage.utils;
+package com.panda912.bandage.internal.utils;
 
 import android.app.Activity;
 import android.app.Application;

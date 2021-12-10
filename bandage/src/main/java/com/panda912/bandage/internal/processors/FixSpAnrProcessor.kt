@@ -1,7 +1,7 @@
-package com.panda912.bandage.processors
+package com.panda912.bandage.internal.processors
 
-import com.panda912.bandage.Processor
-import com.panda912.bandage.sp.SpAnrHelper
+import com.panda912.bandage.internal.Processor
+import com.panda912.bandage.internal.sp.SpAnrHelper
 
 /**
  * Created by panda on 2021/12/6 17:00

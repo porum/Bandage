@@ -2,8 +2,10 @@ dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
         google()
+        maven {
+            setUrl("https://s01.oss.sonatype.org/content/repositories/snapshots/")
+        }
         mavenCentral()
-        jcenter() // Warning: this repository is going to shut down soon
     }
 }
 rootProject.name = "PDD_Bandage"

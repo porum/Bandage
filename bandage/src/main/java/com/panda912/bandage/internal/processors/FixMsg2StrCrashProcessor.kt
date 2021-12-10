@@ -1,10 +1,10 @@
-package com.panda912.bandage.processors
+package com.panda912.bandage.internal.processors
 
 import android.os.Build
 import android.os.Handler
 import android.os.Looper
-import com.panda912.bandage.BandageLogger
-import com.panda912.bandage.Processor
+import com.panda912.bandage.internal.BandageLogger
+import com.panda912.bandage.internal.Processor
 
 /**
  * Created by panda on 2021/12/6 17:04

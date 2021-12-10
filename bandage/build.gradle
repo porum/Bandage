@@ -41,13 +41,13 @@ android {
         versionCode 1
         versionName "1.0"
 
-        consumerProguardFiles "consumer-rules.pro"
+        consumerProguardFiles 'proguard-rules.pro'
     }
 
     buildTypes {
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            minifyEnabled true
+            proguardFiles "proguard-android-optimize.txt", 'proguard-rules.pro'
         }
     }
     compileOptions {
@@ -73,6 +73,14 @@ afterEvaluate {
         archiveClassifier.set("javadoc")
         from(dokkaJavadoc.outputDirectory)
     }
+
+//    task proguardJar(type: ProGuardTask, dependsOn: build) {
+//        configuration '"proguard-android-optimize.txt"'
+//        configuration 'proguard-rules.pro'
+//        injars ""
+//        outjars outJar
+//        dontshrink
+//    }
 
     // https://docs.gradle.org/current/userguide/publishing_maven.html
     publishing {
