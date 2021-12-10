@@ -74,14 +74,6 @@ afterEvaluate {
         from(dokkaJavadoc.outputDirectory)
     }
 
-//    task proguardJar(type: ProGuardTask, dependsOn: build) {
-//        configuration '"proguard-android-optimize.txt"'
-//        configuration 'proguard-rules.pro'
-//        injars ""
-//        outjars outJar
-//        dontshrink
-//    }
-
     // https://docs.gradle.org/current/userguide/publishing_maven.html
     publishing {
         publications {
