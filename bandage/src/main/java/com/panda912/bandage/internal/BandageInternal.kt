@@ -46,7 +46,8 @@ class BandageInternal {
           return@Callback chain.proceed(msg)
         }
       }
-    } catch (ignored: Throwable) {
+    } catch (th: Throwable) {
+      logger.w(TAG, "Bandage init failure.", th)
     }
   }
 
