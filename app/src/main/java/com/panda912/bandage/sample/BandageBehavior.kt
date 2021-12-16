@@ -2,6 +2,7 @@ package com.panda912.bandage.sample
 
 import com.panda912.bandage.IBandageBehavior
 import com.panda912.bandage.data.DynamicBandageData.GuideUpgradeData
+import com.panda912.bandage.logger.BandageLogger
 import com.panda912.bandage.utils.ActivityManager
 
 /**
@@ -26,7 +27,7 @@ class BandageBehavior : IBandageBehavior {
       activity?.finish()
       return
     }
-    println("can not finish fatal activity: $activity, throwable: $throwable")
+    BandageLogger.w("", "can not finish fatal activity: $activity", throwable)
   }
 
   override fun uploadCrash(throwable: Throwable) {

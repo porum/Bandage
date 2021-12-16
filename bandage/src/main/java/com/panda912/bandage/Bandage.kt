@@ -11,6 +11,7 @@ import com.panda912.bandage.interceptors.BadTokenExceptionInterceptor
 import com.panda912.bandage.interceptors.DeadSystemExceptionInterceptor
 import com.panda912.bandage.interceptors.DynamicBandageInterceptor
 import com.panda912.bandage.interceptors.IExceptionInterceptor
+import com.panda912.bandage.logger.BandageLogger
 import com.panda912.bandage.logger.ILogger
 
 /**
@@ -46,7 +47,7 @@ object Bandage {
           addCheckersAndInterceptors()
           BandageInternal.install(it, ILogger.DEFAULT, object : ExceptionHandler() {
             override fun onEnterSafeMode() {
-              println("enter bandage mode")
+              BandageLogger.i("", "enter bandage mode")
             }
 
             override fun onUncaughtExceptionHappened(thread: Thread, throwable: Throwable) {
@@ -92,7 +93,7 @@ object Bandage {
   }
 
   private fun handleCrashAndExit(thread: Thread, throwable: Throwable) {
-    println("handle crash and exit")
+    BandageLogger.w("", "handle crash and exit", throwable)
     BandageInternal.handleCrashByDefaultHandler(thread, throwable)
   }
 

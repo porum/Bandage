@@ -1,5 +1,7 @@
 package com.panda912.bandage
 
+import com.panda912.bandage.logger.BandageLogger
+
 /**
  * Created by panda on 2021/12/13 18:11
  */
@@ -20,7 +22,7 @@ abstract class ExceptionHandler {
     try {
       onUncaughtExceptionHappened(thread, throwable)
     } catch (th: Throwable) {
-      println("catch uncaughtExceptionHappened happened exception: $th")
+      BandageLogger.w("", "catch uncaughtExceptionHappened happened exception: $th")
     }
   }
 
