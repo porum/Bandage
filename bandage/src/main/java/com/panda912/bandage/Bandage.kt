@@ -12,7 +12,6 @@ import com.panda912.bandage.interceptors.DeadSystemExceptionInterceptor
 import com.panda912.bandage.interceptors.DynamicBandageInterceptor
 import com.panda912.bandage.interceptors.IExceptionInterceptor
 import com.panda912.bandage.logger.BandageLogger
-import com.panda912.bandage.logger.ILogger
 
 /**
  * Created by panda on 2021/12/14 14:03
@@ -28,49 +27,44 @@ object Bandage {
   private val checkers = arrayListOf<ICrashChecker>()
   private val interceptors = arrayListOf<IExceptionInterceptor>()
 
-  fun config(cfg: IBandageConfig): Bandage {
+  fun install(cfg: IBandageConfig) {
+    if(isInstalled) {
+      return
+    }
+
     config = cfg
-    return this
-  }
-
-  fun install() {
-    config?.let {
-      if (!isInstalled) {
-        isInstalled = true
-        if (it.bandageEnable) {
-          if (it.activityThreadHandlerHookerEnable) {
-            ActivityThreadHandlerHooker.install()
-          }
-          if (it.fixReportSizeConfigurations) {
-            FixReportSizeConfigurations.hook()
-          }
-          addCheckersAndInterceptors()
-          BandageInternal.install(it, ILogger.DEFAULT, object : ExceptionHandler() {
-            override fun onEnterSafeMode() {
-              BandageLogger.i("", "enter bandage mode")
-            }
-
-            override fun onUncaughtExceptionHappened(thread: Thread, throwable: Throwable) {
-              if (!interceptCrash(thread, throwable)) {
-                handleCrashAndExit(thread, throwable)
-              }
-            }
-
-            override fun onBandageExceptionHappened(thread: Thread, throwable: Throwable) {
-              if (!interceptCrash(thread, throwable)) {
-                crashTimes++
-                if (notThrowInSafeMode(crashTimes, thread, throwable)) {
-                  BandageHelper.uploadCrash(throwable)
-                } else {
-                  handleCrashAndExit(thread, throwable)
-                }
-              }
-            }
-          })
-        }
+    BandageLogger.logger = cfg.logger
+    isInstalled = true
+    if (cfg.bandageEnable) {
+      if (cfg.activityThreadHandlerHookerEnable) {
+        ActivityThreadHandlerHooker.install()
       }
-    } ?: run {
-      throw RuntimeException("config cannot be null.")
+      if (cfg.fixReportSizeConfigurations) {
+        FixReportSizeConfigurations.hook()
+      }
+      addCheckersAndInterceptors()
+      BandageInternal.install(cfg, object : ExceptionHandler() {
+        override fun onEnterSafeMode() {
+          BandageLogger.i("", "enter bandage mode")
+        }
+
+        override fun onUncaughtExceptionHappened(thread: Thread, throwable: Throwable) {
+          if (!interceptCrash(thread, throwable)) {
+            handleCrashAndExit(thread, throwable)
+          }
+        }
+
+        override fun onBandageExceptionHappened(thread: Thread, throwable: Throwable) {
+          if (!interceptCrash(thread, throwable)) {
+            crashTimes++
+            if (notThrowInSafeMode(crashTimes, thread, throwable)) {
+              BandageHelper.uploadCrash(throwable)
+            } else {
+              handleCrashAndExit(thread, throwable)
+            }
+          }
+        }
+      })
     }
   }
 

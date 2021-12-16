@@ -3,6 +3,7 @@ package com.panda912.bandage.sample
 import android.os.Build
 import com.panda912.bandage.IBandageConfig
 import com.panda912.bandage.interceptors.*
+import com.panda912.bandage.logger.ILogger
 
 /**
  * Created by panda on 2021/12/16 10:50
@@ -29,4 +30,6 @@ class BandageConfig : IBandageConfig {
     list.add(VivoReadExceptionNPEInterceptor())
     return list
   }
+
+  override val logger = ILogger.DEFAULT
 }

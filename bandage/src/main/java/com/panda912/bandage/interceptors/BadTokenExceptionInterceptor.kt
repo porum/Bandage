@@ -9,7 +9,7 @@ import com.panda912.bandage.BandageHelper
 class BadTokenExceptionInterceptor : IExceptionInterceptor {
 
   override fun intercept(thread: Thread, throwable: Throwable): Boolean {
-    if (!ignoreBadTokenException(throwable)) {
+    if (!isBadTokenException(throwable)) {
       return false
     }
     BandageHelper.uploadCrash(throwable)
@@ -17,7 +17,7 @@ class BadTokenExceptionInterceptor : IExceptionInterceptor {
     return true
   }
 
-  private fun ignoreBadTokenException(th: Throwable): Boolean {
+  private fun isBadTokenException(th: Throwable): Boolean {
     val stackTrace = th.stackTrace
     if (th !is WindowManager.BadTokenException ||
       th.message?.contains("is not valid; is your activity running?") == false ||

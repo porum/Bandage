@@ -2,7 +2,6 @@ package com.panda912.bandage
 
 import android.os.Looper
 import com.panda912.bandage.logger.BandageLogger
-import com.panda912.bandage.logger.ILogger
 import java.util.concurrent.TimeoutException
 
 /**
@@ -15,9 +14,8 @@ object BandageInternal {
   private var exceptionHandler: ExceptionHandler? = null
   private var defaultUncaughtExceptionHandler: Thread.UncaughtExceptionHandler? = null
 
-  fun install(config: IBandageConfig, logger: ILogger, handler: ExceptionHandler) {
+  fun install(config: IBandageConfig, handler: ExceptionHandler) {
     if (!isInstalled) {
-      BandageLogger.logger = logger
       BandageLogger.i(TAG, "bandage init")
       isInstalled = true
       exceptionHandler = handler
