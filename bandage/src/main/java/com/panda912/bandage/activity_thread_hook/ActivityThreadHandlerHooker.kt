@@ -1,29 +1,26 @@
-package com.panda912.bandage.internal
+package com.panda912.bandage.activity_thread_hook
 
 import android.annotation.SuppressLint
 import android.app.ActivityThread
 import android.os.Build
 import android.os.Handler
 import android.util.SparseArray
-import com.panda912.bandage.ILogger
-import com.panda912.bandage.internal.processors.*
+import com.panda912.bandage.activity_thread_hook.processors.*
+import com.panda912.bandage.logger.BandageLogger
 
 /**
  * Created by panda on 2021/12/6 16:35
  */
 @SuppressLint("PrivateApi", "DiscouragedPrivateApi", "SoonBlockedPrivateApi")
-class BandageInternal {
-  companion object {
-    private const val TAG = "Bandage"
-  }
+object ActivityThreadHandlerHooker {
+  private const val TAG = "ActivityThreadHandlerHooker"
 
   private var uninstallActivityThreadHandlerCallback: (() -> Unit)? = null
 
-  fun install(logger: ILogger) {
+  fun install() {
     check(uninstallActivityThreadHandlerCallback == null) {
-      "Bandage already installed"
+      "ActivityThreadHandlerHooker already installed"
     }
-    BandageLogger.logger = logger
     try {
       swapActivityThreadHandlerCallback { mH, mCallback ->
         uninstallActivityThreadHandlerCallback = {
@@ -47,7 +44,7 @@ class BandageInternal {
         }
       }
     } catch (th: Throwable) {
-      logger.w(TAG, "Bandage init failure.", th)
+      BandageLogger.w(TAG, "ActivityThreadHandlerHooker init failure.", th)
     }
   }
 

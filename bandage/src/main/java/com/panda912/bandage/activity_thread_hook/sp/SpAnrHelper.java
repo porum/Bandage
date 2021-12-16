@@ -1,10 +1,10 @@
-package com.panda912.bandage.internal.sp;
+package com.panda912.bandage.activity_thread_hook.sp;
 
 import android.annotation.SuppressLint;
 import android.os.Build;
 import android.os.Message;
 
-import com.panda912.bandage.internal.BandageLogger;
+import com.panda912.bandage.logger.BandageLogger;
 
 import java.lang.reflect.Field;
 import java.util.concurrent.ConcurrentLinkedQueue;

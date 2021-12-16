@@ -1,4 +1,4 @@
-package com.panda912.bandage
+package com.panda912.bandage.logger
 
 import android.util.Log
 

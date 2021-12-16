@@ -1,4 +1,4 @@
-package com.panda912.bandage.internal
+package com.panda912.bandage.activity_thread_hook
 
 /**
  * Created by panda on 2021/12/6 16:38

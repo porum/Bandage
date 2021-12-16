@@ -1,12 +1,12 @@
-package com.panda912.bandage.internal.processors
+package com.panda912.bandage.activity_thread_hook.processors
 
 import android.app.Activity
 import android.os.Handler
 import android.util.SparseArray
-import com.panda912.bandage.internal.ActivityThreadFixMessage
-import com.panda912.bandage.internal.BandageLogger
-import com.panda912.bandage.internal.Processor
-import com.panda912.bandage.internal.utils.ActivityManager
+import com.panda912.bandage.activity_thread_hook.ActivityThreadFixMessage
+import com.panda912.bandage.logger.BandageLogger
+import com.panda912.bandage.activity_thread_hook.Processor
+import com.panda912.bandage.utils.ActivityManager
 
 
 /**
@@ -51,7 +51,7 @@ class FixActivityCrashProcessor(
       msgName == "EXECUTE_TRANSACTION"
     ) {
       BandageLogger.w(TAG, "finish fatal activity.", th)
-      val activity: Activity? = ActivityManager.getInstance().curActivity
+      val activity: Activity? = ActivityManager.getInstance().getCurActivity()
       if (!ActivityManager.getInstance().isDestroyed(activity)) {
         activity?.finish()
       }

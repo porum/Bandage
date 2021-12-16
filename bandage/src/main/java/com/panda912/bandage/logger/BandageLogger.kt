@@ -1,11 +1,8 @@
-package com.panda912.bandage.internal
-
-import com.panda912.bandage.ILogger
+package com.panda912.bandage.logger
 
 /**
  * Created by panda on 2021/12/10 12:20.
  */
-
 object BandageLogger {
 
   @Volatile
