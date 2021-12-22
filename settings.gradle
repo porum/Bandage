@@ -11,4 +11,4 @@ dependencyResolutionManagement {
 rootProject.name = "PDD_Bandage"
 include ':app'
 include ':bandage'
-include ':lib_hook_android'
+include ':lib_stub_android'

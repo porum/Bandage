@@ -14,11 +14,14 @@ class WebViewFileNotFoundInterceptor : IExceptionInterceptor {
 
   override fun intercept(thread: Thread, throwable: Throwable): Boolean {
     if (throwable.cause?.message?.contains("webview_data.lock: open failed: EACCES (Permission denied)") == true) {
-      val applicationInfo: ApplicationInfo = ActivityThread.currentApplication().applicationInfo
-      BandageLogger.i(
-        "WebViewFileNotFoundInterceptor",
-        applicationInfo.dataDir + " canWrite " + File(applicationInfo.dataDir).canWrite()
-      )
+      try {
+        val applicationInfo: ApplicationInfo = ActivityThread.currentApplication().applicationInfo
+        BandageLogger.i(
+          "WebViewFileNotFoundInterceptor",
+          applicationInfo.dataDir + " canWrite " + File(applicationInfo.dataDir).canWrite()
+        )
+      } catch (ignored: Throwable) {
+      }
       BandageHelper.uploadCrash(throwable)
       Process.killProcess(Process.myPid())
       return true

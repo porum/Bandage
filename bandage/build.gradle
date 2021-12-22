@@ -60,7 +60,7 @@ android {
 }
 
 dependencies {
-    compileOnly project(":lib_hook_android")
+    compileOnly project(':lib_stub_android')
 }
 
 afterEvaluate {
