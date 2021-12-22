@@ -8,11 +8,11 @@ import com.panda912.bandage.BandageHelper
 class HWReadExceptionNPEInterceptor : IExceptionInterceptor {
 
   override fun intercept(thread: Thread, throwable: Throwable): Boolean {
-    if (throwable.message != "Attempt to invoke interface method 'void com.huawei.contentsensor.a\$b.d(android.content.ComponentName)' on a null object reference" || throwable !is NullPointerException) {
-      return false
+    if (throwable is NullPointerException && throwable.message == "Attempt to invoke interface method 'void com.huawei.contentsensor.a\$b.d(android.content.ComponentName)' on a null object reference") {
+      BandageHelper.uploadCrash(throwable)
+      BandageHelper.finishFatalActivity(throwable)
+      return true
     }
-    BandageHelper.uploadCrash(throwable)
-    BandageHelper.finishFatalActivity(throwable)
-    return true
+    return false
   }
 }

@@ -22,12 +22,31 @@ class BandageConfig : IBandageConfig {
   override val behavior = BandageBehavior()
   override fun interceptors(): List<IExceptionInterceptor> {
     val list = arrayListOf<IExceptionInterceptor>()
+    list.add(SpannableStringBuilderExceptionInterceptor())
+    list.add(WebViewFileNotFoundInterceptor())
+    list.add(ReportSizeConfigurationsInterceptor())
+    list.add(GMSExceptionInterceptor())
     if (Build.VERSION.SDK_INT == 23 || Build.VERSION.SDK_INT == 25) {
       list.add(ToastBadTokenExceptionInterceptor())
     }
-    list.add(LooperExceptionInterceptor())
-    list.add(HWReadExceptionNPEInterceptor())
-    list.add(VivoReadExceptionNPEInterceptor())
+    if (Build.VERSION.SDK_INT == 25 &&
+      Build.MANUFACTURER.contains(Regex("QIKU|360", RegexOption.IGNORE_CASE))
+    ) {
+      list.add(LooperExceptionInterceptor())
+    }
+    if (Build.VERSION.SDK_INT == 27 &&
+      Build.MANUFACTURER.contains("HUAWEI", true)
+    ) {
+      list.add(HWReadExceptionNPEInterceptor())
+    }
+    if (Build.VERSION.SDK_INT == 27 &&
+      Build.MANUFACTURER.contains(Regex("vivo|bbk", RegexOption.IGNORE_CASE))
+    ) {
+      list.add(VivoReadExceptionNPEInterceptor())
+    }
+    if (Build.VERSION.SDK_INT == 30) {
+      list.add(OverScrollerExceptionInterceptor())
+    }
     return list
   }
 

@@ -9,12 +9,12 @@ import com.panda912.bandage.BandageHelper
 class BadTokenExceptionInterceptor : IExceptionInterceptor {
 
   override fun intercept(thread: Thread, throwable: Throwable): Boolean {
-    if (!isBadTokenException(throwable)) {
-      return false
+    if (isBadTokenException(throwable)) {
+      BandageHelper.uploadCrash(throwable)
+      BandageHelper.finishFatalActivity(throwable)
+      return true
     }
-    BandageHelper.uploadCrash(throwable)
-    BandageHelper.finishFatalActivity(throwable)
-    return true
+    return false
   }
 
   private fun isBadTokenException(th: Throwable): Boolean {

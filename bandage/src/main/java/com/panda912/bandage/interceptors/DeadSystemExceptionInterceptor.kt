@@ -10,11 +10,11 @@ import com.panda912.bandage.BandageHelper
 class DeadSystemExceptionInterceptor : IExceptionInterceptor {
 
   override fun intercept(thread: Thread, throwable: Throwable): Boolean {
-    if (!isDeadSystemException(throwable)) {
-      return false
+    if (isDeadSystemException(throwable)) {
+      BandageHelper.uploadCrash(throwable)
+      return true
     }
-    BandageHelper.uploadCrash(throwable)
-    return true
+    return false
   }
 
   private fun isDeadSystemException(th: Throwable): Boolean {

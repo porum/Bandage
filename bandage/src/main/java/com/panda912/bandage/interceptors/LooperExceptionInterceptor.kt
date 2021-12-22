@@ -8,10 +8,10 @@ import com.panda912.bandage.BandageHelper
 class LooperExceptionInterceptor : IExceptionInterceptor {
 
   override fun intercept(thread: Thread, throwable: Throwable): Boolean {
-    if (thread.name != "view-assit-thread" || throwable.message != "Only one Looper may be created per thread") {
-      return false
+    if (thread.name == "view-assit-thread" && throwable.message == "Only one Looper may be created per thread") {
+      BandageHelper.uploadCrash(throwable)
+      return true
     }
-    BandageHelper.uploadCrash(throwable)
-    return true
+    return false
   }
 }

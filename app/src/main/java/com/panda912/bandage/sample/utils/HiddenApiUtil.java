@@ -1,4 +1,4 @@
-package com.panda912.bandage.sample;
+package com.panda912.bandage.sample.utils;
 
 import static android.os.Build.VERSION.SDK_INT;
 
