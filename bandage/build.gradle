@@ -60,7 +60,7 @@ android {
 }
 
 dependencies {
-    compileOnly project(':lib_stub_android')
+    compileOnly project(':bandage_stub_android')
 }
 
 afterEvaluate {
