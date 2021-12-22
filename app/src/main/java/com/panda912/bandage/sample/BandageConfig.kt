@@ -1,5 +1,6 @@
 package com.panda912.bandage.sample
 
+import android.app.Application
 import android.os.Build
 import com.panda912.bandage.IBandageConfig
 import com.panda912.bandage.interceptors.*
@@ -8,22 +9,20 @@ import com.panda912.bandage.logger.ILogger
 /**
  * Created by panda on 2021/12/16 10:50
  */
-class BandageConfig : IBandageConfig {
-  override val bandageEnable = true
+class BandageConfig(private val application: Application) : IBandageConfig {
+  override val isEnable = true
   override val activityThreadHandlerHookerEnable = true
-  override val fixReportSizeConfigurations = true
   override val handleCrashByBandage = true
   override val packageName = "com.panda912.bandage.sample"
   override val currentProcessName = "com.panda912.bandage.sample"
   override val enableDynamicBandageInterceptor = true
-  override val fixFinalizeTimeoutException = true
   override val enableSubThreadCrash = true
-  override val disableCatchBadTokenInSubProcess = false
+  override val enableCatchBadTokenInSubProcess = true
   override val behavior = BandageBehavior()
   override fun interceptors(): List<IExceptionInterceptor> {
     val list = arrayListOf<IExceptionInterceptor>()
     list.add(SpannableStringBuilderExceptionInterceptor())
-    list.add(WebViewFileNotFoundInterceptor())
+    list.add(WebViewFileNotFoundInterceptor(application))
     list.add(ReportSizeConfigurationsInterceptor())
     list.add(GMSExceptionInterceptor())
     if (Build.VERSION.SDK_INT == 23 || Build.VERSION.SDK_INT == 25) {

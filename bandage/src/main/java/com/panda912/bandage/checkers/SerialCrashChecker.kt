@@ -7,7 +7,8 @@ import com.panda912.bandage.data.CrashData
  * Created by panda on 2021/12/13 18:02
  */
 class SerialCrashChecker : ICrashChecker {
-  override fun check(
+
+  override fun isHopeful(
     crashDataList: List<CrashData>,
     times: Int,
     thread: Thread,

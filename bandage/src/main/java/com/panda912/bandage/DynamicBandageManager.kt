@@ -20,12 +20,10 @@ object DynamicBandageManager {
   }
 
   @Synchronized
-  fun isEmpty(): Boolean {
-    return dynamicBandageDataList.isEmpty()
-  }
-
-  @Synchronized
   fun getDynamicBandageDataByThrowable(th: Throwable): DynamicBandageData? {
+    if (dynamicBandageDataList.isEmpty()) {
+      return null
+    }
     val className = th.javaClass.name
     for (item in dynamicBandageDataList) {
       if (isValid(item) && className == item.className) {
@@ -76,10 +74,12 @@ object DynamicBandageManager {
     if (data.process == "all") {
       return true
     }
-    val config = Bandage.config!!
-    val processName =
-      if (data.process == "main") config.packageName else config.packageName + ":" + data.process
-    return processName == config.currentProcessName
+    val processName = if (data.process == "main") {
+      Bandage.config!!.packageName
+    } else {
+      Bandage.config!!.packageName + ":" + data.process
+    }
+    return processName == Bandage.config!!.currentProcessName
   }
 
 }

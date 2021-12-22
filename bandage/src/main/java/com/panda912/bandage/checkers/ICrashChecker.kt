@@ -11,7 +11,7 @@ fun interface ICrashChecker {
    * check whether need throw crash and exit app.
    * @return true intercept crash and not throw, otherwise return false.
    */
-  fun check(
+  fun isHopeful(
     crashDataList: List<CrashData>,
     times: Int,
     thread: Thread,

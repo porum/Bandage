@@ -15,7 +15,7 @@ class SampleApplication : Application() {
     super.onCreate()
     HiddenApiUtil.exemptAll()
     registerActivityLifecycleCallbacks(ActivityManager.getInstance())
-    Bandage.install(BandageConfig())
+    Bandage.install(BandageConfig(this))
     createDynamicBandageData()
   }
 
