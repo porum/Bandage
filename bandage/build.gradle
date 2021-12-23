@@ -102,8 +102,8 @@ afterEvaluate {
 
                 pom {
                     name = 'Bandage'
-                    description = 'Pdd Bandage'
-                    url = 'https://github.com/porum/PDD_Bandage'
+                    description = 'Bandage'
+                    url = 'https://github.com/porum/Bandage'
                     licenses {
                         license {
                             name = 'The Apache License, Version 2.0'
@@ -118,7 +118,7 @@ afterEvaluate {
                         }
                     }
                     scm {
-                        url = "https://github.com/porum/PDD_Bandage.git"
+                        url = "https://github.com/porum/Bandage.git"
                     }
                 }
             }
