@@ -34,8 +34,12 @@ object Bandage {
       )
     )
 
-    ActivityThreadHandlerHooker.hook()
-    FixReportSizeConfigurations.hook()
+    if (config.enableActivityThreadHook) {
+      ActivityThreadHandlerHooker.hook()
+    }
+    if (config.enableFixReportSizeConfigurations) {
+      FixReportSizeConfigurations.hook()
+    }
   }
 
   fun addDynamicBandageData(list: List<DynamicBandageData>) {

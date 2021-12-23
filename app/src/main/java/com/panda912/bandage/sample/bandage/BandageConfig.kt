@@ -3,7 +3,7 @@ package com.panda912.bandage.sample.bandage
 import android.app.Application
 import android.os.Build
 import com.panda912.bandage.IBandageConfig
-import com.panda912.bandage.interceptors.*
+import com.panda912.bandage.interceptors.IExceptionInterceptor
 import com.panda912.bandage.logger.ILogger
 import com.panda912.bandage.sample.bandage.interceptors.*
 
@@ -18,6 +18,8 @@ class BandageConfig(private val application: Application) : IBandageConfig {
   override val enableSubThreadCrash = true
   override val enableCatchBadTokenInSubProcess = true
   override val enableDynamicBandageInterceptor = true
+  override val enableActivityThreadHook = true
+  override val enableFixReportSizeConfigurations = true
   override val behavior = BandageBehavior()
   override val interceptors = arrayListOf<IExceptionInterceptor>().apply {
     add(SpannableStringBuilderExceptionInterceptor())
