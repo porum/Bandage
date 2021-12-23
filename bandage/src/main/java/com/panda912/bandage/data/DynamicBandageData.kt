@@ -48,7 +48,7 @@ data class DynamicBandageData(
   )
 }
 
-fun remove(list: ArrayList<DynamicBandageData.ExceptionMatch>, th: Throwable) {
+fun removeMatchedCause(list: ArrayList<DynamicBandageData.ExceptionMatch>, th: Throwable) {
   for (exceptionMatch in list) {
     if (exceptionMatch.isMatch(th)) {
       list.remove(exceptionMatch)
