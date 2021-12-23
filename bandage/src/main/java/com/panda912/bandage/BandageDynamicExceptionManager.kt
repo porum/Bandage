@@ -2,7 +2,7 @@ package com.panda912.bandage
 
 import android.os.SystemClock
 import com.panda912.bandage.data.DynamicBandageData
-import com.panda912.bandage.data.remove
+import com.panda912.bandage.data.removeMatchedCause
 import com.panda912.bandage.logger.BandageLogger
 import kotlin.math.min
 
@@ -58,7 +58,7 @@ object BandageDynamicExceptionManager {
     for (i in 0 until min(causes.size, 10)) {
       val cause = causes[i]
       if (i > 0 && dataCauses != null) {
-        remove(dataCauses, cause)
+        removeMatchedCause(dataCauses, cause)
       }
       val stackTrace = cause.stackTrace
       for (j in 0 until min(stackTrace.size, 20)) {
