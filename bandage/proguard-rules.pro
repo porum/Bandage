@@ -56,7 +56,7 @@
 }
 
 ###################### bandage ######################
--keep class com.panda912.bandage.activity_thread_hook.ActivityThreadHandlerHooker { *; }
+-keep class com.panda912.bandage.hook.activity_thread_hook.ActivityThreadHandlerHooker { *; }
 -keep class com.panda912.bandage.logger.ILogger {
     public void *(java.lang.String, java.lang.String);
     public void *(java.lang.String, java.lang.String, java.lang.Throwable);

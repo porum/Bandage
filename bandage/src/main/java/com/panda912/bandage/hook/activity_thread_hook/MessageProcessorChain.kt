@@ -1,4 +1,4 @@
-package com.panda912.bandage.activity_thread_hook
+package com.panda912.bandage.hook.activity_thread_hook
 
 import android.os.Message
 

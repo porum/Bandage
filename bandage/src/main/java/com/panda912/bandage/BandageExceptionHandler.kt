@@ -33,13 +33,13 @@ class BandageExceptionHandler(
     checkers.add(SerialCrashChecker())
 
     interceptors.add(DeadSystemExceptionInterceptor())
-    if (config.enableCatchBadTokenInSubProcess || config.packageName == config.currentProcessName) {
+    if (config.packageName == config.currentProcessName || config.enableCatchBadTokenInSubProcess) {
       interceptors.add(BadTokenExceptionInterceptor())
     }
     if (config.enableDynamicBandageInterceptor) {
       interceptors.add(DynamicBandageInterceptor())
     }
-    val configInterceptors = config.interceptors() ?: return
+    val configInterceptors = config.interceptors ?: return
     if (configInterceptors.isNotEmpty()) {
       interceptors.addAll(configInterceptors)
     }

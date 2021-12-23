@@ -1,4 +1,4 @@
-package com.panda912.bandage.fixer
+package com.panda912.bandage.hook.fix_report_size_conf
 
 import android.annotation.SuppressLint
 import android.app.ActivityManager

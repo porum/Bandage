@@ -1,4 +1,4 @@
-package com.panda912.bandage.fixer
+package com.panda912.bandage.hook.fix_report_size_conf
 
 import com.panda912.bandage.logger.BandageLogger
 import java.lang.reflect.InvocationHandler

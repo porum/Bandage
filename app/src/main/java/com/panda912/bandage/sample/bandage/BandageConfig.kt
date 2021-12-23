@@ -1,53 +1,49 @@
-package com.panda912.bandage.sample
+package com.panda912.bandage.sample.bandage
 
 import android.app.Application
 import android.os.Build
 import com.panda912.bandage.IBandageConfig
 import com.panda912.bandage.interceptors.*
 import com.panda912.bandage.logger.ILogger
+import com.panda912.bandage.sample.bandage.interceptors.*
 
 /**
  * Created by panda on 2021/12/16 10:50
  */
 class BandageConfig(private val application: Application) : IBandageConfig {
+  override val logger = ILogger.DEFAULT
   override val isEnable = true
-  override val activityThreadHandlerHookerEnable = true
-  override val handleCrashByBandage = true
   override val packageName = "com.panda912.bandage.sample"
   override val currentProcessName = "com.panda912.bandage.sample"
-  override val enableDynamicBandageInterceptor = true
   override val enableSubThreadCrash = true
   override val enableCatchBadTokenInSubProcess = true
+  override val enableDynamicBandageInterceptor = true
   override val behavior = BandageBehavior()
-  override fun interceptors(): List<IExceptionInterceptor> {
-    val list = arrayListOf<IExceptionInterceptor>()
-    list.add(SpannableStringBuilderExceptionInterceptor())
-    list.add(WebViewFileNotFoundInterceptor(application))
-    list.add(ReportSizeConfigurationsInterceptor())
-    list.add(GMSExceptionInterceptor())
+  override val interceptors = arrayListOf<IExceptionInterceptor>().apply {
+    add(SpannableStringBuilderExceptionInterceptor())
+    add(WebViewFileNotFoundInterceptor(application))
+    add(ReportSizeConfigurationsInterceptor())
+    add(GMSExceptionInterceptor())
     if (Build.VERSION.SDK_INT == 23 || Build.VERSION.SDK_INT == 25) {
-      list.add(ToastBadTokenExceptionInterceptor())
+      add(ToastBadTokenExceptionInterceptor())
     }
     if (Build.VERSION.SDK_INT == 25 &&
       Build.MANUFACTURER.contains(Regex("QIKU|360", RegexOption.IGNORE_CASE))
     ) {
-      list.add(LooperExceptionInterceptor())
+      add(LooperExceptionInterceptor())
     }
     if (Build.VERSION.SDK_INT == 27 &&
       Build.MANUFACTURER.contains("HUAWEI", true)
     ) {
-      list.add(HWReadExceptionNPEInterceptor())
+      add(HWReadExceptionNPEInterceptor())
     }
     if (Build.VERSION.SDK_INT == 27 &&
       Build.MANUFACTURER.contains(Regex("vivo|bbk", RegexOption.IGNORE_CASE))
     ) {
-      list.add(VivoReadExceptionNPEInterceptor())
+      add(VivoReadExceptionNPEInterceptor())
     }
     if (Build.VERSION.SDK_INT == 30) {
-      list.add(OverScrollerExceptionInterceptor())
+      add(OverScrollerExceptionInterceptor())
     }
-    return list
   }
-
-  override val logger = ILogger.DEFAULT
 }

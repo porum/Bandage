@@ -1,10 +1,10 @@
-package com.panda912.bandage.activity_thread_hook.processors
+package com.panda912.bandage.hook.activity_thread_hook.processors
 
 import android.os.Build
 import android.os.Bundle
 import com.android.internal.os.SomeArgs
 import com.panda912.bandage.logger.BandageLogger
-import com.panda912.bandage.activity_thread_hook.Processor
+import com.panda912.bandage.hook.activity_thread_hook.Processor
 
 /**
  * Created by panda on 2021/12/7 10:25

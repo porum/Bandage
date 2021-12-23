@@ -1,7 +1,8 @@
-package com.panda912.bandage.interceptors
+package com.panda912.bandage.sample.bandage.interceptors
 
 import android.view.WindowManager
 import com.panda912.bandage.BandageHelper
+import com.panda912.bandage.interceptors.IExceptionInterceptor
 
 /**
  * Created by panda on 2021/12/16 9:15

@@ -1,8 +1,8 @@
 package com.panda912.bandage
 
-import com.panda912.bandage.activity_thread_hook.ActivityThreadHandlerHooker
+import com.panda912.bandage.hook.activity_thread_hook.ActivityThreadHandlerHooker
 import com.panda912.bandage.data.DynamicBandageData
-import com.panda912.bandage.fixer.FixReportSizeConfigurations
+import com.panda912.bandage.hook.fix_report_size_conf.FixReportSizeConfigurations
 import com.panda912.bandage.logger.BandageLogger
 
 internal const val TAG = "Bandage"
@@ -34,7 +34,7 @@ object Bandage {
       )
     )
 
-    ActivityThreadHandlerHooker.install()
+    ActivityThreadHandlerHooker.hook()
     FixReportSizeConfigurations.hook()
   }
 

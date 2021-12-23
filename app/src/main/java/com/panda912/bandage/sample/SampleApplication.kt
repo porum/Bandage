@@ -3,6 +3,7 @@ package com.panda912.bandage.sample
 import android.app.Application
 import com.panda912.bandage.Bandage
 import com.panda912.bandage.data.DynamicBandageData
+import com.panda912.bandage.sample.bandage.BandageConfig
 import com.panda912.bandage.sample.utils.HiddenApiUtil
 import com.panda912.bandage.utils.ActivityManager
 

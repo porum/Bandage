@@ -1,11 +1,11 @@
-package com.panda912.bandage.activity_thread_hook
+package com.panda912.bandage.hook.activity_thread_hook
 
 import android.annotation.SuppressLint
 import android.app.ActivityThread
 import android.os.Build
 import android.os.Handler
 import android.util.SparseArray
-import com.panda912.bandage.activity_thread_hook.processors.*
+import com.panda912.bandage.hook.activity_thread_hook.processors.*
 import com.panda912.bandage.logger.BandageLogger
 
 /**
@@ -17,9 +17,9 @@ object ActivityThreadHandlerHooker {
 
   private var uninstallActivityThreadHandlerCallback: (() -> Unit)? = null
 
-  fun install() {
+  fun hook() {
     check(uninstallActivityThreadHandlerCallback == null) {
-      "ActivityThreadHandlerHooker already installed"
+      "ActivityThreadHandlerHooker already hooked"
     }
     try {
       swapActivityThreadHandlerCallback { mH, mCallback ->
@@ -46,6 +46,11 @@ object ActivityThreadHandlerHooker {
     } catch (th: Throwable) {
       BandageLogger.w(TAG, "ActivityThreadHandlerHooker init failure.", th)
     }
+  }
+
+  private fun unhook() {
+    uninstallActivityThreadHandlerCallback?.invoke()
+    uninstallActivityThreadHandlerCallback = null
   }
 
   private fun swapActivityThreadHandlerCallback(swap: (Handler, Handler.Callback?) -> Handler.Callback?) {

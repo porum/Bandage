@@ -1,11 +1,11 @@
-package com.panda912.bandage.activity_thread_hook.processors
+package com.panda912.bandage.hook.activity_thread_hook.processors
 
 import android.app.Activity
 import android.os.Handler
 import android.util.SparseArray
-import com.panda912.bandage.activity_thread_hook.ActivityThreadFixMessage
+import com.panda912.bandage.hook.activity_thread_hook.ActivityThreadFixMessage
 import com.panda912.bandage.logger.BandageLogger
-import com.panda912.bandage.activity_thread_hook.Processor
+import com.panda912.bandage.hook.activity_thread_hook.Processor
 import com.panda912.bandage.utils.ActivityManager
 
 

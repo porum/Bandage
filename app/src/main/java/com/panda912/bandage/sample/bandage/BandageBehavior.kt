@@ -1,4 +1,4 @@
-package com.panda912.bandage.sample
+package com.panda912.bandage.sample.bandage
 
 import android.util.Log
 import com.panda912.bandage.IBandageBehavior

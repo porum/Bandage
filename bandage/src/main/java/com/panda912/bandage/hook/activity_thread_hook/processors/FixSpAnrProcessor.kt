@@ -1,7 +1,7 @@
-package com.panda912.bandage.activity_thread_hook.processors
+package com.panda912.bandage.hook.activity_thread_hook.processors
 
-import com.panda912.bandage.activity_thread_hook.Processor
-import com.panda912.bandage.activity_thread_hook.sp.SpAnrHelper
+import com.panda912.bandage.hook.activity_thread_hook.Processor
+import com.panda912.bandage.hook.activity_thread_hook.sp.SpAnrHelper
 
 /**
  * Created by panda on 2021/12/6 17:00

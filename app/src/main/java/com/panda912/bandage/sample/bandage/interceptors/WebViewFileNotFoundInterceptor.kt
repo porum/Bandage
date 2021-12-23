@@ -1,9 +1,10 @@
-package com.panda912.bandage.interceptors
+package com.panda912.bandage.sample.bandage.interceptors
 
 import android.content.Context
 import android.content.pm.ApplicationInfo
 import android.os.Process
 import com.panda912.bandage.BandageHelper
+import com.panda912.bandage.interceptors.IExceptionInterceptor
 import com.panda912.bandage.logger.BandageLogger
 import java.io.File
 

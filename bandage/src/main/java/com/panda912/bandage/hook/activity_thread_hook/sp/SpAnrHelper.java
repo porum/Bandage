@@ -1,4 +1,4 @@
-package com.panda912.bandage.activity_thread_hook.sp;
+package com.panda912.bandage.hook.activity_thread_hook.sp;
 
 import android.annotation.SuppressLint;
 import android.os.Build;
