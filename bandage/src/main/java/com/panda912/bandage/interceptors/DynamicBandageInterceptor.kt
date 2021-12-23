@@ -1,7 +1,7 @@
 package com.panda912.bandage.interceptors
 
+import com.panda912.bandage.BandageDynamicExceptionManager
 import com.panda912.bandage.BandageHelper
-import com.panda912.bandage.DynamicBandageManager
 import com.panda912.bandage.data.DynamicBandageData
 
 /**
@@ -10,7 +10,7 @@ import com.panda912.bandage.data.DynamicBandageData
 class DynamicBandageInterceptor : IExceptionInterceptor {
 
   override fun intercept(thread: Thread, throwable: Throwable): Boolean {
-    val data = DynamicBandageManager.getDynamicBandageDataByThrowable(throwable) ?: return false
+    val data = BandageDynamicExceptionManager.getDynamicBandageData(throwable) ?: return false
     handleException(throwable, data)
     return true
   }

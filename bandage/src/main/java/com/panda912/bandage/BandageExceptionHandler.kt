@@ -47,13 +47,7 @@ class BandageExceptionHandler(
 
   override fun uncaughtException(t: Thread, e: Throwable) {
     if (t == Looper.getMainLooper().thread || config.enableSubThreadCrash) {
-      try {
-        if (!isIntercept(t, e)) {
-          handleCrashByDefaultHandler(t, e)
-        }
-      } catch (th: Throwable) {
-        BandageLogger.w(TAG, "catch uncaughtException happened exception", th)
-      }
+      uncaughtExceptionHappened(t, e)
       safeMode(t)
     } else {
       handleCrashByDefaultHandler(t, e)
@@ -74,16 +68,33 @@ class BandageExceptionHandler(
       try {
         Looper.loop()
       } catch (th: Throwable) {
-        val curThread = Thread.currentThread()
-        if (!isIntercept(curThread, th)) {
-          crashTimes++
-          if (isHopeless(crashTimes, curThread, th)) {
-            handleCrashByDefaultHandler(curThread, th)
-          } else {
-            BandageHelper.uploadCrash(th)
-          }
+        bandageExceptionHappened(Thread.currentThread(), th)
+      }
+    }
+  }
+
+  private fun uncaughtExceptionHappened(thread: Thread, th: Throwable) {
+    try {
+      if (!isIntercept(thread, th)) {
+        handleCrashByDefaultHandler(thread, th)
+      }
+    } catch (th: Throwable) {
+      BandageHelper.uploadCrash(th)
+    }
+  }
+
+  private fun bandageExceptionHappened(thread: Thread, th: Throwable) {
+    try {
+      if (!isIntercept(thread, th)) {
+        crashTimes++
+        if (isHopeless(crashTimes, thread, th)) {
+          handleCrashByDefaultHandler(thread, th)
+        } else {
+          BandageHelper.uploadCrash(th)
         }
       }
+    } catch (ex: Throwable) {
+      uncaughtExceptionHappened(Thread.currentThread(), ex)
     }
   }
 

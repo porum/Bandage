@@ -17,10 +17,6 @@ class MainActivity : Activity() {
       startActivity(Intent(this, DetailActivity::class.java))
     }
 
-    findViewById<Button>(R.id.btn2).setOnClickListener {
-      throw WindowManager.BadTokenException("token is not valid; is your activity running?")
-    }
-
     findViewById<Button>(R.id.btn3).setOnClickListener {
       println(10 / 0)
     }

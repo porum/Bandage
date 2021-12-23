@@ -22,9 +22,9 @@ class SampleApplication : Application() {
   private fun createDynamicBandageData() {
     // click button 'crash 10 / 0'
     val stack1 =
-      "        at com.panda912.bandage.sample.MainActivity.onCreate\$lambda-2(MainActivity.kt:25)\n" +
-          "        at com.panda912.bandage.sample.MainActivity.\$r8\$lambda\$P7CD1Jj7lHDl5uOwPa991g3Yrqs(Unknown Source:0)\n" +
-          "        at com.panda912.bandage.sample.MainActivity\$\$ExternalSyntheticLambda1.onClick(Unknown Source:0)\n" +
+      "at com.panda912.bandage.sample.MainActivity.onCreate\$lambda-1(MainActivity.kt:21)\n" +
+          "        at com.panda912.bandage.sample.MainActivity.\$r8\$lambda\$rFwK1IpRD1jDgZ5A7zMkoEr2cEs(Unknown Source:0)\n" +
+          "        at com.panda912.bandage.sample.MainActivity\$\$ExternalSyntheticLambda2.onClick(Unknown Source:0)\n" +
           "        at android.view.View.performClick(View.java:7187)\n" +
           "        at android.view.View.performClickInternal(View.java:7160)\n" +
           "        at android.view.View.access\$3500(View.java:824)\n" +
@@ -38,21 +38,26 @@ class SampleApplication : Application() {
           "        at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:994)"
     val data1 = DynamicBandageData(
       process = "all",
-      className = "java.lang.ArithmeticException",
+      exceptionMatch = DynamicBandageData.ExceptionMatch("java.lang.ArithmeticException", ""),
       stacks = stack1.lines().map { it.trim().replace(Regex("(at |\\([^\\)]*\\))"), "") },
+      causes = null,
       closeCurActivity = false,
       loadPatch = false,
     )
 
     // click button 'crash in sub thread'
     val stack2 =
-      "at com.panda912.bandage.sample.MainActivity\$onCreate\$4\$1.invoke(MainActivity.kt:30)\n" +
-          "        at com.panda912.bandage.sample.MainActivity\$onCreate\$4\$1.invoke(MainActivity.kt:29)\n" +
+      "        at com.panda912.bandage.sample.MainActivity\$onCreate\$3\$1.invoke(MainActivity.kt:26)\n" +
+          "        at com.panda912.bandage.sample.MainActivity\$onCreate\$3\$1.invoke(MainActivity.kt:25)\n" +
           "        at kotlin.concurrent.ThreadsKt\$thread\$thread\$1.run(Thread.kt:30)"
     val data2 = DynamicBandageData(
       process = "all",
-      className = "java.lang.RuntimeException",
+      exceptionMatch = DynamicBandageData.ExceptionMatch(
+        "java.lang.RuntimeException",
+        "crash in sub thread."
+      ),
       stacks = stack2.lines().map { it.trim().replace(Regex("(at |\\([^\\)]*\\))"), "") },
+      causes = null,
       closeCurActivity = false,
       loadPatch = false,
     )

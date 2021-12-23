@@ -1,5 +1,6 @@
 package com.panda912.bandage.sample
 
+import android.util.Log
 import com.panda912.bandage.IBandageBehavior
 import com.panda912.bandage.data.DynamicBandageData.GuideUpgradeData
 import com.panda912.bandage.logger.BandageLogger
@@ -31,6 +32,6 @@ class BandageBehavior : IBandageBehavior {
   }
 
   override fun uploadCrash(throwable: Throwable) {
-
+    println(Log.getStackTraceString(throwable))
   }
 }

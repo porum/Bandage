@@ -40,7 +40,7 @@ object Bandage {
 
   fun addDynamicBandageData(list: List<DynamicBandageData>) {
     if (config?.enableDynamicBandageInterceptor == true) {
-      DynamicBandageManager.addData(list)
+      BandageDynamicExceptionManager.addData(list)
     }
   }
 
