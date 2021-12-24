@@ -1,5 +1,6 @@
 package com.panda912.bandage.hook.fix_report_size_conf
 
+import com.panda912.bandage.TAG
 import com.panda912.bandage.logger.BandageLogger
 import java.lang.reflect.InvocationHandler
 import java.lang.reflect.Method
@@ -11,10 +12,7 @@ class IActivityManagerProxy(private val iActivityManager: Any) : InvocationHandl
 
   override fun invoke(proxy: Any?, method: Method?, args: Array<out Any>?): Any? {
     if (method?.name == "reportSizeConfigurations") {
-      BandageLogger.i(
-        "",
-        "proxy: android.app.IActivityManager\$Stub\$Proxy.reportSizeConfigurations"
-      )
+      BandageLogger.i(TAG, "proxy: android.app.IActivityManager\$Stub\$Proxy.reportSizeConfigurations")
       return try {
         method.invoke(iActivityManager, *(args ?: arrayOfNulls<Any>(0)))
       } catch (th: Throwable) {
