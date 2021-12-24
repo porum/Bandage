@@ -71,10 +71,7 @@ object BandageDynamicExceptionManager {
     }
 
     BandageLogger.i(TAG, "stacks size: ${dataStacks.size}, data.stacks size: ${data.stacks.size}")
-    BandageLogger.i(
-      TAG,
-      "causes size: ${dataCauses?.size ?: 0}, data.causes size: ${data.causes?.size ?: 0}"
-    )
+    BandageLogger.i(TAG, "causes size: ${dataCauses?.size}, data.causes size: ${data.causes?.size}")
     BandageLogger.i(TAG, "match stack cost: ${SystemClock.elapsedRealtime() - startRecordTime}")
 
     if (dataStacks.isNotEmpty()) {

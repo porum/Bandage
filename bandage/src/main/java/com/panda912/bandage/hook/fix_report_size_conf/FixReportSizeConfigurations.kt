@@ -11,6 +11,8 @@ import java.lang.reflect.Proxy
  */
 object FixReportSizeConfigurations {
 
+  private const val TAG = "FixReportSizeConfigurations"
+
   @SuppressLint("PrivateApi", "DiscouragedPrivateApi")
   fun hook() {
     if (Build.VERSION.SDK_INT in 26..28) {
@@ -21,7 +23,7 @@ object FixReportSizeConfigurations {
             isAccessible = true
           }.get(null)
         if (IActivityManagerSingleton == null) {
-          BandageLogger.w("", "IActivityManagerSingleton is null")
+          BandageLogger.w(TAG, "IActivityManagerSingleton is null")
           return
         }
         val mInstanceField = SingletonCls.getDeclaredField("mInstance").apply {
@@ -29,7 +31,7 @@ object FixReportSizeConfigurations {
         }
         val iActivityManager = mInstanceField.get(IActivityManagerSingleton)
         if (iActivityManager == null) {
-          BandageLogger.w("", "iActivityManager is null")
+          BandageLogger.w(TAG, "iActivityManager is null")
           return
         }
 
@@ -42,9 +44,9 @@ object FixReportSizeConfigurations {
             IActivityManagerProxy(iActivityManager)
           )
         )
-        BandageLogger.w("", "hook IActivityManagerProxy success")
+        BandageLogger.w(TAG, "hook IActivityManagerProxy success")
       } catch (th: Throwable) {
-        BandageLogger.w("", "hook IActivityManagerProxy failed", th)
+        BandageLogger.w(TAG, "hook IActivityManagerProxy failed", th)
       }
     }
   }

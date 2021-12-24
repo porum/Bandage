@@ -9,7 +9,11 @@ import com.panda912.bandage.utils.ActivityManager
 /**
  * Created by panda on 2021/12/16 10:48
  */
+
+private const val TAG = "BandageBehavior"
+
 class BandageBehavior : IBandageBehavior {
+
   override fun loadPatch() {
 
   }
@@ -28,7 +32,7 @@ class BandageBehavior : IBandageBehavior {
       activity?.finish()
       return
     }
-    BandageLogger.w("", "can not finish fatal activity: $activity", throwable)
+    BandageLogger.w(TAG, "can not finish fatal activity: $activity", throwable)
   }
 
   override fun uploadCrash(throwable: Throwable) {
