@@ -2,13 +2,9 @@ package com.panda912.bandage
 
 import android.os.Looper
 import com.panda912.bandage.checkers.CrashTimesChecker
-import com.panda912.bandage.checkers.ICrashChecker
 import com.panda912.bandage.checkers.SerialCrashChecker
 import com.panda912.bandage.data.CrashData
-import com.panda912.bandage.interceptors.BadTokenExceptionInterceptor
-import com.panda912.bandage.interceptors.DeadSystemExceptionInterceptor
-import com.panda912.bandage.interceptors.DynamicBandageInterceptor
-import com.panda912.bandage.interceptors.IExceptionInterceptor
+import com.panda912.bandage.interceptors.*
 import com.panda912.bandage.logger.BandageLogger
 
 /**
@@ -21,17 +17,15 @@ class BandageExceptionHandler(
 
   private var crashTimes = 0
   private val crashList = arrayListOf<CrashData>()
-  private val checkers = arrayListOf<ICrashChecker>()
+  private val checkers = arrayListOf(CrashTimesChecker(), SerialCrashChecker())
   private val interceptors = arrayListOf<IExceptionInterceptor>()
 
   init {
-    addCheckersAndInterceptors()
+    addInterceptors()
   }
 
-  private fun addCheckersAndInterceptors() {
-    checkers.add(CrashTimesChecker())
-    checkers.add(SerialCrashChecker())
-
+  private fun addInterceptors() {
+    interceptors.add(FinalizeTimeoutExceptionInterceptor())
     interceptors.add(DeadSystemExceptionInterceptor())
     if (config.packageName == config.currentProcessName || config.enableCatchBadTokenInSubProcess) {
       interceptors.add(BadTokenExceptionInterceptor())
