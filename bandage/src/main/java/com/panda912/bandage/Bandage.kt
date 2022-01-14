@@ -1,7 +1,7 @@
 package com.panda912.bandage
 
-import com.panda912.bandage.hook.activity_thread_hook.ActivityThreadHandlerHooker
 import com.panda912.bandage.data.DynamicBandageData
+import com.panda912.bandage.hook.activity_thread_hook.ActivityThreadHandlerHooker
 import com.panda912.bandage.hook.fix_report_size_conf.FixReportSizeConfigurations
 import com.panda912.bandage.logger.BandageLogger
 
@@ -29,8 +29,9 @@ object Bandage {
     BandageLogger.logger = config.logger
 
     Thread.setDefaultUncaughtExceptionHandler(
-      FinalizeTimeoutExceptionHandler(
-        BandageExceptionHandler(config, Thread.getDefaultUncaughtExceptionHandler())
+      BandageExceptionHandler(
+        config,
+        Thread.getDefaultUncaughtExceptionHandler()
       )
     )
 
