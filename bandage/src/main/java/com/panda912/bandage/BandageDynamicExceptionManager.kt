@@ -61,7 +61,7 @@ object BandageDynamicExceptionManager {
         removeMatchedCause(dataCauses, cause)
       }
       val stackTrace = cause.stackTrace
-      for (j in 0 until min(stackTrace.size, 20)) {
+      for (j in 0 until min(stackTrace.size, 40)) {
         if (dataStacks.isEmpty()) {
           break
         }
