@@ -52,7 +52,7 @@ class BandageExceptionHandler(
     BandageLogger.i(TAG, "enter bandage mode")
 
     val threadName: String = if (thread == null) "null" else thread.name
-    BandageLogger.w(TAG, "bandage exception in thread[$threadName]")
+    BandageLogger.i(TAG, "bandage exception in thread[$threadName]")
     if (Looper.myLooper() == null) {
       BandageLogger.w(TAG, "There is no loop in thread[$threadName]")
       return
