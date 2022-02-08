@@ -3,8 +3,8 @@ package com.panda912.bandage.hook.activity_thread_hook.processors
 import android.os.Build
 import android.os.Bundle
 import com.android.internal.os.SomeArgs
-import com.panda912.bandage.logger.BandageLogger
 import com.panda912.bandage.hook.activity_thread_hook.Processor
+import com.panda912.bandage.logger.BandageLogger
 
 /**
  * Created by panda on 2021/12/7 10:25
@@ -17,7 +17,7 @@ class UiMsgInterceptor : Processor {
   override fun process(chain: Processor.Chain): Boolean {
     val message = chain.input()
 
-    if (!"huawei".equals(Build.MANUFACTURER, true)) {
+    if (!"huawei".equals(Build.MANUFACTURER, true) || message.obj == null) {
       return chain.proceed(message)
     }
 
