@@ -36,6 +36,6 @@ class BandageBehavior : IBandageBehavior {
   }
 
   override fun uploadCrash(throwable: Throwable) {
-    println(Log.getStackTraceString(throwable))
+    println("uploadCrash: " + Log.getStackTraceString(throwable))
   }
 }

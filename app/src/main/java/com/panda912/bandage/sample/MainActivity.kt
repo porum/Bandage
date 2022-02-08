@@ -3,7 +3,6 @@ package com.panda912.bandage.sample
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.view.WindowManager
 import android.widget.Button
 import kotlin.concurrent.thread
 
