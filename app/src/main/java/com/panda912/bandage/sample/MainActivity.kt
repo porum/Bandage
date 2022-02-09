@@ -16,8 +16,12 @@ class MainActivity : Activity() {
       startActivity(Intent(this, DetailActivity::class.java))
     }
 
-    findViewById<Button>(R.id.btn3).setOnClickListener {
+    findViewById<Button>(R.id.btn2).setOnClickListener {
       println(10 / 0)
+    }
+
+    findViewById<Button>(R.id.btn3).setOnClickListener {
+      throw Exception("aoh")
     }
 
     findViewById<Button>(R.id.btn4).setOnClickListener {

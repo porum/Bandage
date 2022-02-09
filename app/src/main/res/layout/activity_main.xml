@@ -13,10 +13,16 @@
         android:text="DetailActivity" />
 
     <Button
-        android:id="@+id/btn3"
+        android:id="@+id/btn2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="crash 10 / 0" />
+
+    <Button
+        android:id="@+id/btn3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="throw exception" />
 
     <Button
         android:id="@+id/btn4"
