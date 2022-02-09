@@ -40,16 +40,8 @@ android {
         targetSdk 31
         versionCode 1
         versionName "1.0"
-
-        consumerProguardFiles 'proguard-rules.pro'
     }
 
-    buildTypes {
-        release {
-            minifyEnabled true
-            proguardFiles "proguard-android-optimize.txt", 'proguard-rules.pro'
-        }
-    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -66,7 +58,7 @@ dependencies {
 afterEvaluate {
     task sourceJar(type: Jar) {
         archiveClassifier.set("sources")
-//        from android.sourceSets.main.kotlin.srcDirs
+        from android.sourceSets.main.kotlin.srcDirs
     }
 
     task dokkaJavadocJar(type: Jar, dependsOn: dokkaJavadoc) {
