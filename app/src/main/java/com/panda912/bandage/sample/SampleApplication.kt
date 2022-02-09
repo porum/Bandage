@@ -5,7 +5,6 @@ import android.content.Context
 import com.panda912.bandage.Bandage
 import com.panda912.bandage.data.DynamicBandageData
 import com.panda912.bandage.sample.bandage.BandageConfig
-import com.panda912.bandage.utils.ActivityManager
 import me.weishu.reflection.Reflection
 
 /**
@@ -20,7 +19,6 @@ class SampleApplication : Application() {
 
   override fun onCreate() {
     super.onCreate()
-    registerActivityLifecycleCallbacks(ActivityManager.getInstance())
     Bandage.install(BandageConfig(this))
     createDynamicBandageData()
   }
@@ -49,8 +47,8 @@ class SampleApplication : Application() {
 
     // click button 'crash in sub thread'
     val stack2 =
-      "        at com.panda912.bandage.sample.MainActivity\$onCreate\$3\$1.invoke(MainActivity.kt:26)\n" +
-          "        at com.panda912.bandage.sample.MainActivity\$onCreate\$3\$1.invoke(MainActivity.kt:25)\n" +
+      "        at com.panda912.bandage.sample.MainActivity\$onCreate\$4\$1.invoke(MainActivity.kt:29)\n" +
+          "        at com.panda912.bandage.sample.MainActivity\$onCreate\$4\$1.invoke(MainActivity.kt:28)\n" +
           "        at kotlin.concurrent.ThreadsKt\$thread\$thread\$1.run(Thread.kt:30)"
     val data2 = DynamicBandageData(
       process = "all",

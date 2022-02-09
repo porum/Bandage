@@ -10,7 +10,7 @@ import com.panda912.bandage.sample.bandage.interceptors.*
 /**
  * Created by panda on 2021/12/16 10:50
  */
-class BandageConfig(private val application: Application) : IBandageConfig {
+class BandageConfig(override val application: Application) : IBandageConfig {
   override val logger = ILogger.DEFAULT
   override val isEnable = true
   override val packageName = "com.panda912.bandage.sample"
