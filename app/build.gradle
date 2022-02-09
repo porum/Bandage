@@ -31,6 +31,6 @@ android {
 
 dependencies {
     implementation 'com.github.tiann:FreeReflection:3.1.0'
-    implementation project(":bandage")
-//    implementation "io.github.porum:bandage:1.0.0"
+//    implementation project(":bandage")
+    implementation "io.github.porum:bandage:2.0.1"
 }
