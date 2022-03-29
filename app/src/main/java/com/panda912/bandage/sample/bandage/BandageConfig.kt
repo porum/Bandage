@@ -44,6 +44,9 @@ class BandageConfig(override val application: Application) : IBandageConfig {
     ) {
       add(VivoReadExceptionNPEInterceptor())
     }
+    if (Build.VERSION.SDK_INT == 27) {
+      add(CameraUnsupportedOperationExceptionInterceptor())
+    }
     if (Build.VERSION.SDK_INT == 30) {
       add(OverScrollerExceptionInterceptor())
     }
