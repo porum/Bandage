@@ -9,6 +9,8 @@ import com.panda912.bandage.data.DynamicBandageData
  */
 class DynamicBandageInterceptor : IExceptionInterceptor {
 
+  override fun getName() = "DynamicBandageInterceptor"
+
   override fun intercept(thread: Thread, throwable: Throwable): Boolean {
     val data = BandageDynamicExceptionManager.getDynamicBandageData(throwable) ?: return false
     handleException(throwable, data)

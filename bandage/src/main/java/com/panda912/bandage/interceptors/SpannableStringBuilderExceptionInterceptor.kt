@@ -1,12 +1,13 @@
-package com.panda912.bandage.sample.bandage.interceptors
+package com.panda912.bandage.interceptors
 
 import com.panda912.bandage.BandageHelper
-import com.panda912.bandage.interceptors.IExceptionInterceptor
 
 /**
  * Created by panda on 2021/12/22 14:42
  */
 class SpannableStringBuilderExceptionInterceptor : IExceptionInterceptor {
+
+  override fun getName() = "SpannableStringBuilderExceptionInterceptor"
 
   override fun intercept(thread: Thread, throwable: Throwable): Boolean {
     if (isSpannableStringBuilderException(throwable)) {
