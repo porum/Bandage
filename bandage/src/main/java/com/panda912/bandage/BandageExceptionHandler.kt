@@ -27,6 +27,21 @@ class BandageExceptionHandler(
   private fun addInterceptors() {
     interceptors.add(FinalizeTimeoutExceptionInterceptor())
     interceptors.add(DeadSystemExceptionInterceptor())
+    interceptors.add(ReportSizeConfigurationsInterceptor())
+    interceptors.add(BoostMetadataNPEInterceptor())
+    interceptors.add(TopResumedActivityInterceptor())
+    interceptors.add(StopActivityNPEInterceptor())
+    interceptors.add(PopupWindowBadTokenInterceptor())
+    interceptors.add(JsDialogBadTokenInterceptor())
+    interceptors.add(WebViewFileNotFoundInterceptor(config.application))
+    interceptors.add(CameraUnsupportedOperationExceptionInterceptor())
+    interceptors.add(OverScrollerExceptionInterceptor())
+    interceptors.add(SpannableStringBuilderExceptionInterceptor())
+    interceptors.add(GMSExceptionInterceptor())
+    interceptors.add(HWReadExceptionNPEInterceptor())
+    interceptors.add(OppoMessageNPEInterceptor())
+    interceptors.add(VivoReadExceptionNPEInterceptor())
+    interceptors.add(QikuLooperExceptionInterceptor())
     if (config.packageName == config.currentProcessName || config.enableCatchBadTokenInSubProcess) {
       interceptors.add(BadTokenExceptionInterceptor())
     }
@@ -98,7 +113,7 @@ class BandageExceptionHandler(
   }
 
   private fun isIntercept(thread: Thread, throwable: Throwable): Boolean {
-    return interceptors.any { it.intercept(thread, throwable) }
+    return interceptors.any { it.shouldEnableOpt() && it.intercept(thread, throwable) }
   }
 
   private fun handleCrashByDefaultHandler(thread: Thread, throwable: Throwable) {

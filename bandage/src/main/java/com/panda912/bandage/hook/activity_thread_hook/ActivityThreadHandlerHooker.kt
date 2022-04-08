@@ -1,7 +1,6 @@
 package com.panda912.bandage.hook.activity_thread_hook
 
 import android.annotation.SuppressLint
-import android.app.ActivityThread
 import android.os.Build
 import android.os.Handler
 import android.util.SparseArray
@@ -14,6 +13,12 @@ import com.panda912.bandage.logger.BandageLogger
 @SuppressLint("PrivateApi", "DiscouragedPrivateApi", "SoonBlockedPrivateApi")
 object ActivityThreadHandlerHooker {
   private const val TAG = "ActivityThreadHandlerHooker"
+
+  private val activityThreadClass by lazy { Class.forName("android.app.ActivityThread") }
+
+  private val activityThreadInstance by lazy {
+    activityThreadClass.getDeclaredMethod("currentActivityThread").invoke(null)!!
+  }
 
   private var uninstallActivityThreadHandlerCallback: (() -> Unit)? = null
 
@@ -54,9 +59,8 @@ object ActivityThreadHandlerHooker {
   }
 
   private fun swapActivityThreadHandlerCallback(swap: (Handler, Handler.Callback?) -> Handler.Callback?) {
-    val activityThread = ActivityThread.currentActivityThread()
-    val mHField = ActivityThread::class.java.getDeclaredField("mH").apply { isAccessible = true }
-    val mH = mHField[activityThread] as Handler
+    val mHField = activityThreadClass.getDeclaredField("mH").apply { isAccessible = true }
+    val mH = mHField[activityThreadInstance] as Handler
 
     val mCallbackField =
       Handler::class.java.getDeclaredField("mCallback").apply { isAccessible = true }

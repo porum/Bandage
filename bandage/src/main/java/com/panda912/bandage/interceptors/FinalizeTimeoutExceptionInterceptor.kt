@@ -10,6 +10,8 @@ import java.util.concurrent.TimeoutException
  */
 class FinalizeTimeoutExceptionInterceptor : IExceptionInterceptor {
 
+  override fun getName() = "FinalizeTimeoutExceptionInterceptor"
+
   override fun intercept(thread: Thread, throwable: Throwable): Boolean {
     if (thread.name == "FinalizerWatchdogDaemon" && throwable is TimeoutException) {
       BandageLogger.i(TAG, "catch FinalizeTimeoutException")

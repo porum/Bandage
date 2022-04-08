@@ -8,6 +8,8 @@ import com.panda912.bandage.BandageHelper
  */
 class BadTokenExceptionInterceptor : IExceptionInterceptor {
 
+  override fun getName() = "BadTokenExceptionInterceptor"
+
   override fun intercept(thread: Thread, throwable: Throwable): Boolean {
     if (isBadTokenException(throwable)) {
       BandageHelper.uploadCrash(throwable)
