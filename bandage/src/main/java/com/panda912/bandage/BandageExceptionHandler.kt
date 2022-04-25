@@ -37,6 +37,7 @@ class BandageExceptionHandler(
     interceptors.add(CameraUnsupportedOperationExceptionInterceptor())
     interceptors.add(OverScrollerExceptionInterceptor())
     interceptors.add(SpannableStringBuilderExceptionInterceptor())
+    interceptors.add(SSBCheckRangeExceptionInterceptor())
     interceptors.add(GMSExceptionInterceptor())
     interceptors.add(HWReadExceptionNPEInterceptor())
     interceptors.add(OppoMessageNPEInterceptor())
