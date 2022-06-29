@@ -105,7 +105,7 @@ afterEvaluate {
                     developers {
                         developer {
                             id = 'porum'
-                            name = 'sunguo.sun'
+                            name = 'guobao.sun'
                             email = 'sunguobao12@gmail.com'
                         }
                     }
