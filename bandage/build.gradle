@@ -6,6 +6,34 @@ plugins {
     id "org.jetbrains.dokka"
 }
 
+tasks.create("compileAndroidStubWithJavac", JavaCompile) {
+    source(new File("src/stub/java"))
+    classpath = project.files(getAndroidJar(32))
+    destinationDirectory.set(new File(project.buildDir, "/tmp/compileAndroidStubWithJavac"))
+}
+
+tasks.create("generateAndroidStubJar", org.gradle.jvm.tasks.Jar) {
+    archiveBaseName.set("bandage-android-stub")
+    archiveVersion.set(VERSION)
+    from(tasks.getByName("compileAndroidStubWithJavac"))
+    include("**/*.class")
+}
+
+String getAndroidJar(int compileSdkVersion) {
+    String androidSdkDir
+    File localProperties = rootProject.file("local.properties")
+    if (localProperties.exists()) {
+        Properties properties = new Properties()
+        properties.load(new FileInputStream(localProperties))
+        androidSdkDir = properties.getProperty("sdk.dir")
+    }
+    if (androidSdkDir == null || androidSdkDir.isEmpty()) {
+        throw new StopExecutionException("please declares your 'sdk.dir' to file 'local.properties'")
+    }
+    String path = "platforms${File.separator}android-${compileSdkVersion}${File.separator}android.jar"
+    return new File(androidSdkDir.toString(), path).absolutePath
+}
+
 // https://kotlin.github.io/dokka/1.6.0/user_guide/gradle/usage/#configuration-options
 dokkaJavadoc.configure {
     // outputDirectory.set(buildDir.resolve("dokka"))
@@ -52,7 +80,7 @@ android {
 }
 
 dependencies {
-    compileOnly project(':bandage_stub_android')
+    compileOnly(tasks.getByName("generateAndroidStubJar").outputs.files)
 }
 
 afterEvaluate {

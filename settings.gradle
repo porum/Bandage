@@ -10,4 +10,3 @@ dependencyResolutionManagement {
 rootProject.name = "Bandage"
 include ':app'
 include ':bandage'
-include ':bandage_stub_android'
