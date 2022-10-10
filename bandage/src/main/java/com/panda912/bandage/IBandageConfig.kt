@@ -17,6 +17,7 @@ interface IBandageConfig {
   val enableCatchBadTokenInSubProcess: Boolean
   val enableDynamicBandageInterceptor: Boolean
   val enableActivityThreadHook: Boolean
+  val enableViewRootImplHandlerHook: Boolean
   val enableFixReportSizeConfigurations: Boolean
   val behavior: IBandageBehavior
   val interceptors: List<IExceptionInterceptor>?
