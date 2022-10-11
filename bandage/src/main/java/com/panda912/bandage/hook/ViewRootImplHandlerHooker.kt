@@ -75,7 +75,6 @@ object ViewRootImplHandlerHooker : Application.ActivityLifecycleCallbacks {
 
     override fun handleMessage(msg: Message): Boolean {
       try {
-        BandageLogger.i(TAG, "handle message: $msg")
         handler.handleMessage(msg)
       } catch (th: Throwable) {
         BandageLogger.w(TAG, "handle message occur error, message: $msg", th)
