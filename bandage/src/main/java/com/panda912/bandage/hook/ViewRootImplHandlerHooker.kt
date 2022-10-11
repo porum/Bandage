@@ -10,13 +10,15 @@ import android.view.View
 import com.panda912.bandage.logger.BandageLogger
 
 /**
+ * https://android.googlesource.com/platform/frameworks/base/+/525caa44ceda39cf5bc0823f1ef293865b5a5e30%5E%21/#F0
+ *
  * Created by panda on 2022/10/10 17:03
  */
 object ViewRootImplHandlerHooker : Application.ActivityLifecycleCallbacks {
   private const val TAG = "ViewRootImplHandlerHooker"
 
   fun hook(application: Application) {
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) { // == enough?
       application.registerActivityLifecycleCallbacks(this)
     }
   }
