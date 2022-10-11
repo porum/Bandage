@@ -4,7 +4,6 @@ import android.app.Application
 import com.panda912.bandage.IBandageConfig
 import com.panda912.bandage.interceptors.IExceptionInterceptor
 import com.panda912.bandage.logger.ILogger
-import com.panda912.bandage.sample.bandage.interceptors.ZeusInterceptor
 
 /**
  * Created by panda on 2021/12/16 10:50
