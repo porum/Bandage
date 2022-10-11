@@ -7,6 +7,7 @@ import com.panda912.bandage.hook.activity_thread_hook.ActivityThreadFixMessage
 import com.panda912.bandage.logger.BandageLogger
 import com.panda912.bandage.hook.activity_thread_hook.Processor
 import com.panda912.bandage.utils.ActivityManager
+import com.panda912.bandage.utils.isOutOfMemoryError
 
 
 /**
@@ -31,7 +32,7 @@ class FixActivityCrashProcessor(
     try {
       mH.handleMessage(message)
     } catch (th: Throwable) {
-      if (th is OutOfMemoryError) {
+      if (th.isOutOfMemoryError()) {
         throw th
       } else {
         finishCrashActivity(fixMessage, th)

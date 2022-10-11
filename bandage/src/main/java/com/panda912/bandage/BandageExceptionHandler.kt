@@ -6,6 +6,7 @@ import com.panda912.bandage.checkers.SerialCrashChecker
 import com.panda912.bandage.data.CrashData
 import com.panda912.bandage.interceptors.*
 import com.panda912.bandage.logger.BandageLogger
+import com.panda912.bandage.utils.isOutOfMemoryError
 
 /**
  * Created by panda on 2021/12/22 18:09
@@ -56,7 +57,7 @@ class BandageExceptionHandler(
   }
 
   override fun uncaughtException(t: Thread, e: Throwable) {
-    if (t == Looper.getMainLooper().thread || config.enableSubThreadCrash) {
+    if ((t == Looper.getMainLooper().thread || config.enableSubThreadCrash) && !e.isOutOfMemoryError()) {
       uncaughtExceptionHappened(t, e)
       safeMode(t)
     } else {
