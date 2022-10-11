@@ -79,7 +79,11 @@ class BandageExceptionHandler(
       try {
         Looper.loop()
       } catch (th: Throwable) {
-        bandageExceptionHappened(Thread.currentThread(), th)
+        if (th.isOutOfMemoryError()) {
+          handleCrashByDefaultHandler(Thread.currentThread(), th)
+        } else {
+          bandageExceptionHappened(Thread.currentThread(), th)
+        }
       }
     }
   }
