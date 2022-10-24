@@ -6,6 +6,7 @@ import com.panda912.bandage.checkers.SerialCrashChecker
 import com.panda912.bandage.data.CrashData
 import com.panda912.bandage.interceptors.*
 import com.panda912.bandage.logger.BandageLogger
+import com.panda912.bandage.utils.isChoreographerException
 import com.panda912.bandage.utils.isOutOfMemoryError
 
 /**
@@ -57,7 +58,8 @@ class BandageExceptionHandler(
   }
 
   override fun uncaughtException(t: Thread, e: Throwable) {
-    if ((t == Looper.getMainLooper().thread || config.enableSubThreadCrash) && !e.isOutOfMemoryError()) {
+    val isMainThread = t == Looper.getMainLooper().thread
+    if (((isMainThread && !e.isChoreographerException()) || (!isMainThread && config.enableSubThreadCrash)) && !e.isOutOfMemoryError()) {
       uncaughtExceptionHappened(t, e)
       safeMode(t)
     } else {
@@ -79,7 +81,7 @@ class BandageExceptionHandler(
       try {
         Looper.loop()
       } catch (th: Throwable) {
-        if (th.isOutOfMemoryError()) {
+        if (th.isOutOfMemoryError() || (th.isChoreographerException() && thread == Looper.getMainLooper().thread)) {
           handleCrashByDefaultHandler(Thread.currentThread(), th)
         } else {
           bandageExceptionHappened(Thread.currentThread(), th)
@@ -94,7 +96,7 @@ class BandageExceptionHandler(
         handleCrashByDefaultHandler(thread, th)
       }
     } catch (th: Throwable) {
-      BandageHelper.uploadCrash(th)
+      BandageLogger.w(TAG, "uncaughtExceptionHappened", th)
     }
   }
 
@@ -105,7 +107,7 @@ class BandageExceptionHandler(
         if (isHopeless(crashTimes, thread, th)) {
           handleCrashByDefaultHandler(thread, th)
         } else {
-          BandageHelper.uploadCrash(th)
+          BandageLogger.w(TAG, "crash in safe mode and has been consumed.", th)
         }
       }
     } catch (ex: Throwable) {
@@ -123,7 +125,7 @@ class BandageExceptionHandler(
   }
 
   private fun handleCrashByDefaultHandler(thread: Thread, throwable: Throwable) {
-    BandageLogger.i(TAG, "handle crash by default handler")
+    BandageLogger.w(TAG, "handle crash by default handler", throwable)
     handler?.uncaughtException(thread, throwable)
   }
 }
