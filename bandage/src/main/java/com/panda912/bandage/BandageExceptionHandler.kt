@@ -2,6 +2,7 @@ package com.panda912.bandage
 
 import android.os.Looper
 import com.panda912.bandage.checkers.CrashTimesChecker
+import com.panda912.bandage.checkers.ICrashChecker
 import com.panda912.bandage.checkers.SerialCrashChecker
 import com.panda912.bandage.data.CrashData
 import com.panda912.bandage.interceptors.*
@@ -19,11 +20,21 @@ class BandageExceptionHandler(
 
   private var crashTimes = 0
   private val crashList = arrayListOf<CrashData>()
-  private val checkers = arrayListOf(CrashTimesChecker(), SerialCrashChecker())
+  private val checkers = arrayListOf<ICrashChecker>()
   private val interceptors = arrayListOf<IExceptionInterceptor>()
 
   init {
+    addCheckers()
     addInterceptors()
+  }
+
+  private fun addCheckers() {
+    checkers.add(CrashTimesChecker())
+    checkers.add(SerialCrashChecker())
+    val configCheckers = config.checkers ?: return
+    if (configCheckers.isNotEmpty()) {
+      checkers.addAll(configCheckers)
+    }
   }
 
   private fun addInterceptors() {

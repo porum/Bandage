@@ -8,23 +8,23 @@ import com.panda912.bandage.data.DynamicBandageData.GuideUpgradeData
 object BandageHelper {
 
   fun startRouter(router: String) {
-    Bandage.config?.behavior?.startRouter(router)
+    Bandage.config.behavior.startRouter(router)
   }
 
   fun uploadCrash(throwable: Throwable) {
-    Bandage.config?.behavior?.uploadCrash(throwable)
+    Bandage.config.behavior.uploadCrash(throwable)
   }
 
   fun loadPatch() {
-    Bandage.config?.behavior?.loadPatch()
+    Bandage.config.behavior.loadPatch()
   }
 
   fun guideUpgrade(guideUpgradeData: GuideUpgradeData, closeCurActivity: Boolean) {
-    Bandage.config?.behavior?.guideUpgrade(guideUpgradeData, closeCurActivity)
+    Bandage.config.behavior.guideUpgrade(guideUpgradeData, closeCurActivity)
   }
 
   fun finishFatalActivity(throwable: Throwable) {
-    Bandage.config?.behavior?.finishCurActivity(throwable)
+    Bandage.config.behavior.finishCurActivity(throwable)
   }
 
 }

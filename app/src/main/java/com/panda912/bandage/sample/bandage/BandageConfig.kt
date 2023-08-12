@@ -2,6 +2,7 @@ package com.panda912.bandage.sample.bandage
 
 import android.app.Application
 import com.panda912.bandage.IBandageConfig
+import com.panda912.bandage.checkers.ICrashChecker
 import com.panda912.bandage.interceptors.IExceptionInterceptor
 import com.panda912.bandage.logger.ILogger
 
@@ -21,4 +22,5 @@ class BandageConfig(override val application: Application) : IBandageConfig {
   override val enableFixReportSizeConfigurations = true
   override val behavior = BandageBehavior()
   override val interceptors: List<IExceptionInterceptor>? = null
+  override val checkers: List<ICrashChecker>? = null
 }

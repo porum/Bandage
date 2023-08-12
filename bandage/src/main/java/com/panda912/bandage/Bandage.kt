@@ -14,22 +14,18 @@ internal const val TAG = "Bandage"
  */
 object Bandage {
 
-  @JvmField
-  var config: IBandageConfig? = null
+  internal lateinit var config: IBandageConfig
 
+  @JvmStatic
   fun install(config: IBandageConfig) {
-    check(this.config == null) {
+    check(this::config.isInitialized.not()) {
       "Bandage already installed"
     }
-    if (!config.isEnable) {
-      return
-    }
+    if (!config.isEnable) return
 
-    BandageLogger.i(TAG, "init")
-
-    config.application.registerActivityLifecycleCallbacks(ActivityManager.getInstance())
     this.config = config
     BandageLogger.logger = config.logger
+    config.application.registerActivityLifecycleCallbacks(ActivityManager.getInstance())
 
     Thread.setDefaultUncaughtExceptionHandler(
       BandageExceptionHandler(
@@ -49,8 +45,9 @@ object Bandage {
     }
   }
 
+  @JvmStatic
   fun addDynamicBandageData(list: List<DynamicBandageData>) {
-    if (config?.enableDynamicBandageInterceptor == true) {
+    if (config.enableDynamicBandageInterceptor) {
       BandageDynamicExceptionManager.addData(list)
     }
   }

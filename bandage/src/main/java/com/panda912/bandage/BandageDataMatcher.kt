@@ -13,7 +13,7 @@ object BandageDataMatcher {
   private const val TAG = "BandageDataMatcher"
 
   fun isStackMatch(data: DynamicBandageData, th: Throwable): Boolean {
-    if (data.stacks.isNullOrEmpty()) {
+    if (data.stacks.isEmpty()) {
       return false
     }
 
@@ -74,11 +74,11 @@ object BandageDataMatcher {
       return true
     }
     val processName = if (data.process == "main") {
-      Bandage.config!!.packageName
+      Bandage.config.packageName
     } else {
-      Bandage.config!!.packageName + ":" + data.process
+      Bandage.config.packageName + ":" + data.process
     }
-    return processName == Bandage.config!!.currentProcessName
+    return processName == Bandage.config.currentProcessName
   }
 
 }

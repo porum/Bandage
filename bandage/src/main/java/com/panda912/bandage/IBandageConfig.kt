@@ -1,6 +1,7 @@
 package com.panda912.bandage
 
 import android.app.Application
+import com.panda912.bandage.checkers.ICrashChecker
 import com.panda912.bandage.interceptors.IExceptionInterceptor
 import com.panda912.bandage.logger.ILogger
 
@@ -21,4 +22,5 @@ interface IBandageConfig {
   val enableFixReportSizeConfigurations: Boolean
   val behavior: IBandageBehavior
   val interceptors: List<IExceptionInterceptor>?
+  val checkers: List<ICrashChecker>?
 }
