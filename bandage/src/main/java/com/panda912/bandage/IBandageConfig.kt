@@ -1,9 +1,6 @@
 package com.panda912.bandage
 
 import android.app.Application
-import com.panda912.bandage.checkers.ICrashChecker
-import com.panda912.bandage.interceptors.IExceptionInterceptor
-import com.panda912.bandage.logger.ILogger
 
 /**
  * Created by panda on 2021/12/13 18:07

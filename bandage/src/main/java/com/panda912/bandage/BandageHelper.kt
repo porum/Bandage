@@ -1,6 +1,6 @@
 package com.panda912.bandage
 
-import com.panda912.bandage.data.DynamicBandageData.GuideUpgradeData
+import com.panda912.bandage.internal.data.DynamicBandageData.GuideUpgradeData
 
 /**
  * Created by panda on 2021/12/13 18:19

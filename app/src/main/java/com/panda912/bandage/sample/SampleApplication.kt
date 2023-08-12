@@ -3,7 +3,7 @@ package com.panda912.bandage.sample
 import android.app.Application
 import android.content.Context
 import com.panda912.bandage.Bandage
-import com.panda912.bandage.data.DynamicBandageData
+import com.panda912.bandage.internal.data.DynamicBandageData
 import com.panda912.bandage.sample.bandage.BandageConfig
 import me.weishu.reflection.Reflection
 

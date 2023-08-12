@@ -1,10 +1,11 @@
 package com.panda912.bandage
 
-import com.panda912.bandage.data.DynamicBandageData
-import com.panda912.bandage.hook.ViewRootImplHandlerHooker
-import com.panda912.bandage.hook.activity_thread_hook.ActivityThreadHandlerHooker
-import com.panda912.bandage.hook.fix_report_size_conf.FixReportSizeConfigurations
-import com.panda912.bandage.logger.BandageLogger
+import com.panda912.bandage.internal.data.DynamicBandageData
+import com.panda912.bandage.internal.hook.ViewRootImplHandlerHooker
+import com.panda912.bandage.internal.hook.activity_thread_hook.ActivityThreadHandlerHooker
+import com.panda912.bandage.internal.hook.fix_report_size_conf.FixReportSizeConfigurations
+import com.panda912.bandage.internal.dynamic.BandageDynamicExceptionManager
+import com.panda912.bandage.internal.BandageLogger
 import com.panda912.bandage.utils.ActivityManager
 
 internal const val TAG = "Bandage"

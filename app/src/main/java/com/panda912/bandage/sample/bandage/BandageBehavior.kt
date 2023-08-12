@@ -2,8 +2,7 @@ package com.panda912.bandage.sample.bandage
 
 import android.util.Log
 import com.panda912.bandage.IBandageBehavior
-import com.panda912.bandage.data.DynamicBandageData.GuideUpgradeData
-import com.panda912.bandage.logger.BandageLogger
+import com.panda912.bandage.internal.data.DynamicBandageData
 import com.panda912.bandage.utils.ActivityManager
 
 /**
@@ -18,7 +17,7 @@ class BandageBehavior : IBandageBehavior {
 
   }
 
-  override fun guideUpgrade(guideUpgradeData: GuideUpgradeData, closeCurActivity: Boolean) {
+  override fun guideUpgrade(guideUpgradeData: DynamicBandageData.GuideUpgradeData, closeCurActivity: Boolean) {
 
   }
 
@@ -32,7 +31,7 @@ class BandageBehavior : IBandageBehavior {
       activity?.finish()
       return
     }
-    BandageLogger.w(TAG, "can not finish fatal activity: $activity", throwable)
+    Log.w(TAG, "can not finish fatal activity: $activity", throwable)
   }
 
   override fun uploadCrash(throwable: Throwable) {

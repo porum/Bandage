@@ -10,7 +10,7 @@ import java.util.*
 /**
  * Created by panda on 2021/1/6 10:13.
  */
-object RomUtil {
+internal object RomUtil {
 
   private var miuiVersion: String? = null
 

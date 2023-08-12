@@ -1,12 +1,31 @@
 package com.panda912.bandage
 
 import android.os.Looper
-import com.panda912.bandage.checkers.CrashTimesChecker
-import com.panda912.bandage.checkers.ICrashChecker
-import com.panda912.bandage.checkers.SerialCrashChecker
-import com.panda912.bandage.data.CrashData
-import com.panda912.bandage.interceptors.*
-import com.panda912.bandage.logger.BandageLogger
+import com.panda912.bandage.internal.checker.CrashTimesChecker
+import com.panda912.bandage.internal.checker.SerialCrashChecker
+import com.panda912.bandage.internal.data.CrashData
+import com.panda912.bandage.internal.interceptor.BadTokenExceptionInterceptor
+import com.panda912.bandage.internal.interceptor.BoostMetadataNPEInterceptor
+import com.panda912.bandage.internal.interceptor.CameraUnsupportedOperationExceptionInterceptor
+import com.panda912.bandage.internal.interceptor.DeadSystemExceptionInterceptor
+import com.panda912.bandage.internal.interceptor.DynamicBandageInterceptor
+import com.panda912.bandage.internal.interceptor.FinalizeTimeoutExceptionInterceptor
+import com.panda912.bandage.internal.interceptor.GMSExceptionInterceptor
+import com.panda912.bandage.internal.interceptor.HWReadExceptionNPEInterceptor
+import com.panda912.bandage.internal.interceptor.JsDialogBadTokenInterceptor
+import com.panda912.bandage.internal.interceptor.OppoMessageNPEInterceptor
+import com.panda912.bandage.internal.interceptor.OverScrollerExceptionInterceptor
+import com.panda912.bandage.internal.interceptor.PopupWindowBadTokenInterceptor
+import com.panda912.bandage.internal.interceptor.QikuLooperExceptionInterceptor
+import com.panda912.bandage.internal.interceptor.ReportSizeConfigurationsInterceptor
+import com.panda912.bandage.internal.interceptor.SSBCheckRangeExceptionInterceptor
+import com.panda912.bandage.internal.interceptor.SpannableStringBuilderExceptionInterceptor
+import com.panda912.bandage.internal.interceptor.StopActivityNPEInterceptor
+import com.panda912.bandage.internal.interceptor.TopResumedActivityInterceptor
+import com.panda912.bandage.internal.interceptor.VivoReadExceptionNPEInterceptor
+import com.panda912.bandage.internal.interceptor.WebViewFileNotFoundInterceptor
+import com.panda912.bandage.internal.BandageLogger
+import com.panda912.bandage.internal.interceptor.ToastBadTokenExceptionInterceptor
 import com.panda912.bandage.utils.isChoreographerException
 import com.panda912.bandage.utils.isOutOfMemoryError
 
@@ -39,6 +58,7 @@ class BandageExceptionHandler(
 
   private fun addInterceptors() {
     interceptors.add(FinalizeTimeoutExceptionInterceptor())
+    interceptors.add(ToastBadTokenExceptionInterceptor())
     interceptors.add(DeadSystemExceptionInterceptor())
     interceptors.add(ReportSizeConfigurationsInterceptor())
     interceptors.add(BoostMetadataNPEInterceptor())
