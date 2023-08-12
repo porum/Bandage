@@ -6,6 +6,26 @@ plugins {
     id "org.jetbrains.dokka"
 }
 
+File localProperties = rootProject.file("local.properties")
+if (localProperties.exists()) {
+    Properties properties = new Properties()
+    properties.load(localProperties.newDataInputStream())
+    project.ext["ANDROID_HOME"] = properties.getProperty("sdk.dir")
+    project.ext["sonatypeUserName"] = properties.getProperty("sonatypeUserName")
+    project.ext["sonatypePassword"] = properties.getProperty("sonatypePassword")
+    project.ext["signing.keyId"] = properties.getProperty("signing.keyId")
+    project.ext["signing.password"] = properties.getProperty("signing.password")
+    project.ext["signing.secretKeyRingFile"] = properties.getProperty("signing.secretKeyRingFile")
+} else {
+    // github workflow
+    project.ext["ANDROID_HOME"] = System.getenv("ANDROID_HOME")
+    project.ext["sonatypeUserName"] = System.getenv("MAVEN_USERNAME")
+    project.ext["sonatypePassword"] = System.getenv("MAVEN_PASSWORD")
+    project.ext["signing.keyId"] = System.getenv("SIGNING_KEY_ID")
+    project.ext["signing.password"] = System.getenv("SIGNING_PASSWORD")
+    project.ext["signing.secretKeyRingFile"] = System.getenv("SIGNING_SECRET_KEY_RING_FILE")
+}
+
 tasks.create("compileAndroidStubWithJavac", JavaCompile) {
     source(new File("src/stub/java"))
     classpath = project.files(getAndroidJar(32))
@@ -20,13 +40,7 @@ tasks.create("generateAndroidStubJar", org.gradle.jvm.tasks.Jar) {
 }
 
 String getAndroidJar(int compileSdkVersion) {
-    String androidSdkDir
-    File localProperties = rootProject.file("local.properties")
-    if (localProperties.exists()) {
-        Properties properties = new Properties()
-        properties.load(new FileInputStream(localProperties))
-        androidSdkDir = properties.getProperty("sdk.dir")
-    }
+    String androidSdkDir = project.ext["ANDROID_HOME"]
     if (androidSdkDir == null || androidSdkDir.isEmpty()) {
         throw new StopExecutionException("please declares your 'sdk.dir' to file 'local.properties'")
     }
@@ -143,14 +157,6 @@ afterEvaluate {
                 }
             }
         }
-
-        Properties properties = new Properties()
-        properties.load(project.rootProject.file('local.properties').newDataInputStream())
-        project.ext["sonatypeUserName"] = properties.getProperty("sonatypeUserName")
-        project.ext["sonatypePassword"] = properties.getProperty("sonatypePassword")
-        project.ext["signing.keyId"] = properties.getProperty("signing.keyId")
-        project.ext["signing.password"] = properties.getProperty("signing.password")
-        project.ext["signing.secretKeyRingFile"] = properties.getProperty("signing.secretKeyRingFile")
 
         repositories {
             maven {

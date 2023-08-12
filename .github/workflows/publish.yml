@@ -1,0 +1,42 @@
+name: Publish
+
+on:
+  push:
+    tags: 
+      - v*
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: set up JDK 11
+      uses: actions/setup-java@v3
+      with:
+        java-version: '11'
+        distribution: 'temurin'
+        cache: gradle
+
+    - name: Setup Android SDK
+      uses: android-actions/setup-android@v2
+
+    - name: Prepare environment
+      env:
+        SIGNING_SECRET_KEY_RING_FILE: ${{ secrets.SIGNING_SECRET_KEY_RING_FILE }}
+      run: echo $SIGNING_SECRET_KEY_RING_FILE | base64 --decode > secret.gpg | pwd
+
+    - name: Grant execute permission for gradlew
+      run: chmod +x gradlew
+      
+    - name: Publish to Maven Central
+      run: ./gradlew clean :bandage:publishReleasePublicationToMavenRepository
+      env:
+        MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+        MAVEN_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
+        SIGNING_KEY_ID: ${{ secrets.SIGNING_KEY_ID }}
+        SIGNING_PASSWORD: ${{ secrets.SIGNING_PASSWORD }}
+        SIGNING_SECRET_KEY_RING_FILE: /home/runner/work/Bandage/Bandage/secret.gpg
+
